@@ -21,12 +21,7 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 <script language="javascript">
 
 function successHandler(location) {
-	$.get('locate/success.php?store=1', 
-		{ longitude: location.coords.longitude, 
-		  latitude: location.coords.latitude,
-		  accuracy: location.coords.accuracy }, function() {
-			 window.location = 'locate/success.php';
-		  });
+	window.location = 'locate/success.php?longitude=' + location.coords.longitude + '&latitude=' + location.coords.latitude + '&accuracy = ' + location.coords.accuracy;
 }
 
 function errorHandler(error) {

@@ -25,6 +25,8 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 	<div data-role="content">
     	<img src="../images/logo_large.png" />
         <hr />
+        <?php var_dump($_GET); ?>
+        <hr />
         Oops, this isn't implemented yet. <a href="fail.php">Click here</a>.
     </div> 
 </div> 

@@ -4,11 +4,6 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
-if(isset($_GET['store']) && $_GET['store'] == 1) {
-	header('Location: canvas/index.php');
-	die();	
-}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,7 +20,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <body>
 <div data-role="page">  
     <div data-role="header"> 
-        <h1>Canvas!</h1> 
+        <h1>Edit Your Dorm</h1> 
     </div> 
 	
 </div> 
