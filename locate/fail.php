@@ -5,7 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/index.php"</script>');	
+	die('<script>window.location = "../canvas/index.php";</script>');	
 }
 
 ?>
@@ -27,7 +27,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
         <h1>Dorm Location</h1> 
     </div> 
 	<div data-role="content">
-    	<form method="post" action="fail.php?store=1">
+    	<form method="post" action="fail.php?store=1" data-ajax="false">
         <div>Sorry, we were not able to locate your dorm automatically. Please enter your dorm and dorm room manually.</div>
         <div data-role="fieldcontain">
             <label for="dorm-name">Dorm Name</label>
