@@ -113,6 +113,8 @@ function drawObjects() {
 
 function touchUp(e) {
 	selectIndex = -1;
+	checkCollide();
+	drawObjects();
 }
  
 function touchDown(e) {
