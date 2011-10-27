@@ -5,7 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/index.php";</script>');	
+	die('<script>window.location = "../canvas/style.php";</script>');	
 }
 
 ?>

@@ -207,6 +207,7 @@ function checkCollide() {
 </canvas>
 <div data-role="footer" class="ui-bar">
 	<a href="add.php" data-rel="dialog" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
+    <a href="../checkout/choose.php" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
 </div>
 
 <div style="display:none">
