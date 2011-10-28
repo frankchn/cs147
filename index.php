@@ -25,7 +25,7 @@ function successHandler(location) {
 }
 
 function errorHandler(error) {
-	window.location = 'locate/fail.php';
+	window.location = 'canvas/home.php';
 }
 
 navigator.geolocation.getCurrentPosition(successHandler, errorHandler);

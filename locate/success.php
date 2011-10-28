@@ -27,7 +27,7 @@ require($ROOT_PREFIX.'inc/function.inc.php');
         <hr />
         <?php var_dump($_GET); ?>
         <hr />
-        Oops, this isn't implemented yet. (The above message shows your longitude and latitude in coordinates.) <a href="fail.php">Click here</a>.
+        Oops, this isn't implemented yet. (The above message shows your longitude and latitude in coordinates.) <a href="../canvas/home.php">Click here</a>.
     </div> 
 </div> 
 </body>

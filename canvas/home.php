@@ -4,10 +4,6 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
-if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/index.php";</script>');	
-}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -28,6 +24,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
     </div> 
 	<div data-role="content">
     <ul data-role="listview" data-theme="g">
+    	<li><a href="../locate/fail.php">Pick your dorm room</a></li>
 		<li><a href="index.php">Decorate your room</a></li>
 		<li><a href="style.php">Pick a style</a></li>
 		<li><a href="../checkout/choose.php">Checkout</a></li>
