@@ -30,17 +30,17 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
     	<form method="post" action="style.php?store=1" data-ajax="false">
         <div data-role="fieldcontain">
 	    <fieldset data-role="controlgroup">
-		<input type="radio" name="contemp" id="contemp" value="contemporary" checked="checked" />
+		<input type="radio" name="style" id="contemp" value="contemporary" checked="checked" />
 			<label for="contemp">Contemporary</label>
-		<input type="radio" name="modern" id="modern" value="modern"/>
+		<input type="radio" name="style" id="modern" value="modern"/>
 			<label for="modern">Modern</label>
-		<input type="radio" name="art" id="art" value="art"/>
+		<input type="radio" name="style" id="art" value="art"/>
 			<label for="art">Art Deco</label>
-        	 <input type="radio" name="tropical" id="tropical" value="tropical"/>
+        	 <input type="radio" name="style" id="tropical" value="tropical"/>
 			<label for="tropical">Tropical</label>
-        	 <input type="radio" name="retro" id="retro" value="retro"/>
+        	 <input type="radio" name="style" id="retro" value="retro"/>
 			<label for="retro">Retro</label>
-        	 <input type="radio" name="med" id="med" value="med"/>
+        	 <input type="radio" name="style" id="med" value="med"/>
 			<label for="med">Mediterranean</label>
 	    </fieldset>
 	</div>
