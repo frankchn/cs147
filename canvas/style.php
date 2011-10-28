@@ -5,7 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/style.php";</script>');	
+	die('<script>window.location = "../canvas/index.php";</script>');	
 }
 
 ?>
@@ -24,23 +24,26 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <body>
 <div data-role="page">  
     <div data-role="header"> 
-        <h1>Dorm Location</h1> 
+        <h1>Pick a Style</h1> 
     </div> 
 	<div data-role="content">
-    	<form method="post" action="fail.php?store=1" data-ajax="false">
-        <div>Sorry, we were not able to locate your dorm automatically. Please enter your dorm and dorm room manually.</div>
+    	<form method="post" action="style.php?store=1" data-ajax="false">
         <div data-role="fieldcontain">
-            <label for="dorm-name">Dorm Name</label>
-            <select name="dorm-name" id="dorm-name-select">
-                <option value="FroSoCo">FroSoCo</option>
-                <option value="Branner">Branner</option>
-                <option value="Crothers Memorial">Crothers Memorial</option>
-            </select>
-        </div>        
-        <div data-role="fieldcontain">
-            <label for="name">Room Number:</label>
-            <input type="number" name="room_number" id="room_number" value=""  />
-        </div>	
+	    <fieldset data-role="controlgroup">
+		<input type="radio" name="contemp" id="contemp" value="contemporary" checked="checked" />
+			<label for="contemp">Contemporary</label>
+		<input type="radio" name="modern" id="modern" value="modern"/>
+			<label for="modern">Modern</label>
+		<input type="radio" name="art" id="art" value="art"/>
+			<label for="art">Art Deco</label>
+        	 <input type="radio" name="tropical" id="tropical" value="tropical"/>
+			<label for="tropical">Tropical</label>
+        	 <input type="radio" name="retro" id="retro" value="retro"/>
+			<label for="retro">Retro</label>
+        	 <input type="radio" name="med" id="med" value="med"/>
+			<label for="med">Mediterranean</label>
+	    </fieldset>
+	</div>
         <div data-role="fieldcontain">
         	<button type="submit" data-theme="b" name="submit" value="submit-value">Save &amp; Continue</button>
         </div>

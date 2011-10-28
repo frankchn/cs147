@@ -5,7 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/style.php";</script>');	
+	die('<script>window.location = "../canvas/index.php";</script>');	
 }
 
 ?>
@@ -24,25 +24,13 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <body>
 <div data-role="page">  
     <div data-role="header"> 
-        <h1>Dorm Location</h1> 
+        <h1>Checkout Options</h1> 
     </div> 
 	<div data-role="content">
-    	<form method="post" action="fail.php?store=1" data-ajax="false">
-        <div>Sorry, we were not able to locate your dorm automatically. Please enter your dorm and dorm room manually.</div>
+    	<form method="post" action="checkout.php?option=1" data-ajax="false">
         <div data-role="fieldcontain">
-            <label for="dorm-name">Dorm Name</label>
-            <select name="dorm-name" id="dorm-name-select">
-                <option value="FroSoCo">FroSoCo</option>
-                <option value="Branner">Branner</option>
-                <option value="Crothers Memorial">Crothers Memorial</option>
-            </select>
-        </div>        
-        <div data-role="fieldcontain">
-            <label for="name">Room Number:</label>
-            <input type="number" name="room_number" id="room_number" value=""  />
-        </div>	
-        <div data-role="fieldcontain">
-        	<button type="submit" data-theme="b" name="submit" value="submit-value">Save &amp; Continue</button>
+        	<button type="submit" data-theme="b" name="submit" value="submit-value">Buy Items Online</button>
+        	<button type="submit" data-theme="b" name="submit" value="submit-value">View Store Locations</button>
         </div>
         </form>
 	</div> 
