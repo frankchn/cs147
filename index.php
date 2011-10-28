@@ -37,9 +37,9 @@ navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
 <body>
 <div data-role="page">  
 	<div data-role="content">
-    	<img src="images/logo_large.png" />
+    	<img src="images/dorm_decor.png" />
         <hr />
-        <center>Please wait...</center>
+        <center>Your one-stop shop for the perfect dorm room!</center>
     </div> 
 </div> 
 </body>
