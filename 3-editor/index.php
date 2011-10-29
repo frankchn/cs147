@@ -90,6 +90,10 @@ function touchUp(e) {
 	selectMoveIndex = -1;
 	checkCollide();
 	drawObjects();
+	
+	$.post('save.php', { objects: JSON.stringify(objects) }, function(data) {
+
+	});	
 }
  
 function touchDown(e) {
