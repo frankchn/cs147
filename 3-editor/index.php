@@ -31,8 +31,9 @@ var ctx;
 var canX;
 var canY;
 var mouseIsDown = 0;
-var selectIndex = -1;
+var selectMoveIndex = -1;
 var waitingForSecond = -1;
+var selectIndex = -1;
 
 var loadedImages = 0;
 var loadedImgObjs = [];
@@ -49,7 +50,6 @@ function init() {
     document.body.addEventListener("touchcancel", touchUp, false);
 	
 	loadImages();
-	//drawObjects();
 }
 
 function loadImages() {
@@ -72,44 +72,56 @@ function drawObjects() {
 	}
 	
 	for(i = 0; i < objects.length; i++) {
-		if(objects[i]['collide']) {
-			ctx.fillStyle = '#ff0000';
+		if(objects[i]['collide']) {		
+			ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
-			//context.globalAlpha=0.0;
+		}	
+	}
+	
+	for(i = 0; i < objects.length; i++) {
+		if(objects[i]['selected']) {		
+			ctx.fillStyle = 'rgba(255, 0, 255, 0.5)';
+			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
 		}	
 	}
 }
 
 function touchUp(e) {
-	selectIndex = -1;
+	selectMoveIndex = -1;
 	checkCollide();
 	drawObjects();
 }
  
 function touchDown(e) {
     e.preventDefault();
-    canX = e.targetTouches[0].pageX - can.offsetLeft;
-    canY = e.targetTouches[0].pageY - can.offsetTop;
+	
+	canX = e.targetTouches[0].pageX - can.offsetLeft;
+	canY = e.targetTouches[0].pageY - can.offsetTop;
 	
 	for(i = 0; i < objects.length; i++) {
 		if(objects[i]['position']['x'] <= canX && objects[i]['position']['x'] + objects[i]['size']['width'] >= canX &&
 		   objects[i]['position']['y'] <= canY && objects[i]['position']['y'] + objects[i]['size']['height'] >= canY) {
-			   newSelectIndex = i;
-			   break;
+			   newselectMoveIndex = i;
 		}
+	    objects[i]['selected'] = false;		
 	}
+
+	objects[newselectMoveIndex]['selected'] = true;	
+	selectIndex = newselectMoveIndex;
 	
 	if(waitingForSecond == -1) {
-		waitingForSecond = 	newSelectIndex;
-		setTimeout('clearSecond()', 1000);
-	} else if(waitingForSecond == newSelectIndex) {
+		waitingForSecond = 	newselectMoveIndex;
+		setTimeout('clearSecond()', 400);
+	} else if(waitingForSecond == newselectMoveIndex) {
 		$('#manipulate_object').click();
 		clearSecond();	
 	} else {
 		clearSecond();	
 	}
 	
-	selectIndex = newSelectIndex;
+	selectMoveIndex = newselectMoveIndex;
+	
+	drawObjects();
 }
  
 function clearSecond() {
@@ -120,7 +132,7 @@ function touchXY(e) {
     if (!e) var e = event;
     e.preventDefault();
 		
-	if(selectIndex == -1) return;
+	if(selectMoveIndex == -1) return;
 		
     var newcanX = e.targetTouches[0].pageX - can.offsetLeft;
     var newcanY = e.targetTouches[0].pageY - can.offsetTop;
@@ -130,8 +142,8 @@ function touchXY(e) {
 	
 	checkCollide();
 
-	objects[selectIndex]['position']['x'] += deltaX;
-	objects[selectIndex]['position']['y'] += deltaY; 
+	objects[selectMoveIndex]['position']['x'] += deltaX;
+	objects[selectMoveIndex]['position']['y'] += deltaY; 
 	
 	canX = newcanX;
 	canY = newcanY;
@@ -175,6 +187,7 @@ function saveConfigurationAndCheckOut() {
 
 $(document).ready(function () {
   init();
+  setTimeout('drawObjects();', 3000);
 });
 
 </script>
@@ -187,6 +200,7 @@ $(document).ready(function () {
 </canvas>
 <div data-role="footer" class="ui-bar">
 	<a href="add.php" data-rel="dialog" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
+    <a href="#" data-role="button" data-icon="forward">Rotate</a>
     <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
 </div>
 
