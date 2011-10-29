@@ -1,10 +1,8 @@
 <?php
 
 $ROOT_PREFIX = '';
-
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
-
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,30 +15,24 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
 <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
-
-<script language="javascript">
-
-function successHandler(location) {
-	window.location = 'home.php?longitude=' + location.coords.longitude + '&latitude=' + location.coords.latitude + '&accuracy = ' + location.coords.accuracy;
-}
-
-function errorHandler(error) {
-	window.location = '0-location/manual.php';
-}
-
-navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
-
-</script>
-
 </head>
 
 <body>
-<div data-role="page" data-theme="e">  
-	<div data-role="content">
-    	<img src="images/logo_large.png" />
-        <hr />
-        <center>Your one-stop shop for the perfect dorm room!</center>
+<div data-role="page">  
+    <div data-role="header"> 
+        <h1>DormDecor</h1> 
     </div> 
+	<div data-role="content">
+    <ul data-role="listview" data-theme="g">
+    	<li><a href="0-location/manual.php">School</a></li>
+    	<li><a href="1-dormroom/pick.php">Dorm Room</a></li>
+		<li><a href="2-style/style.php">Style</a></li>
+		<li><a href="3-editor/index.php">Decorate</a></li>        
+		<li><a href="4-checkout/choose.php">Checkout</a></li>
+        <li><a href="help.php">Help</a></li>
+	</ul>
+        
+	</div> 
 </div> 
 </body>
 </html>
