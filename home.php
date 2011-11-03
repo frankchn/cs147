@@ -17,7 +17,6 @@ if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
   $school_id = 1;
   mysql_query('UPDATE `sessions` SET `geolocation` = \''.serialize($loc).'\', `school_id` = '.$school_id.' WHERE `id` = '.$session_info['id']);
 
-  print(mysql_error());
 }
 
 ?>
@@ -39,11 +38,15 @@ if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
     <div data-role="content" data-theme="e">
       <ul data-role="listview" data-theme="e">
 	  <li><a href="0-location/manual.php">School</a></li>
+	  <?php if($session_info['school_id'] != -1) { ?>
 	  <li><a href="1-dormroom/pick.php">Dorm Room</a></li>
 	  <li><a href="2-style/style.php">Style</a></li>
+	  <?php if(isset($session_info['config_info']['dorm_id'])) { ?>
 	  <li><a href="3-editor/index.php">Decorate</a></li>        
 	  <li><a href="4-checkout/choose.php">Checkout</a></li>
+	  <?php } ?>
 	  <li><a href="help.php">Help</a></li>
+	  <?php } ?>
       </ul>
     </div> 
 </div> 

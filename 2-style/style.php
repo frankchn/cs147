@@ -5,7 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../3-editor/index.php";</script>');	
+	die('<script>window.location = "../home.php";</script>');	
 }
 
 ?>
@@ -29,22 +29,16 @@ generate_header('Pick A Style', '<a href="../home.php" data-icon="delete">Cancel
 ?>
     <div data-role="content">
       <form id="manualform" method="post" action="style.php?store=1" data-ajax="false">
-      <div data-role="fieldcontain">
 	  <fieldset data-role="controlgroup">
-	      <input type="radio" name="style" id="contemp" value="contemporary" checked="checked" />
-		      <label for="contemp">Contemporary</label>
-	      <input type="radio" name="style" id="modern" value="modern"/>
-		      <label for="modern">Modern</label>
-	      <input type="radio" name="style" id="art" value="art"/>
-		      <label for="art">Art Deco</label>
-		<input type="radio" name="style" id="tropical" value="tropical"/>
-		      <label for="tropical">Tropical</label>
-		<input type="radio" name="style" id="retro" value="retro"/>
-		      <label for="retro">Retro</label>
-		<input type="radio" name="style" id="med" value="med"/>
-		      <label for="med">Mediterranean</label>
+	      <?php
+	      $s_r = mysql_query('SELECT * FROM `styles`');
+	      while($s = mysql_fetch_assoc($s_r)) {
+		printf('<input type="radio" name="style" id="contemp" value="%s" checked="checked" /><label for="contemp">%s</label>',
+		       $s['id'],
+		       $s['name']);
+	      }
+	      ?>
 	  </fieldset>
-      </div>
       </form>
     </div> 
 </div> 

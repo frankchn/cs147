@@ -16,9 +16,14 @@ function gen_random_string($length = 8) {
 function gen_new_session() {
   $s_unique_id = gen_random_string(16);
   setcookie('session_key', $s_unique_id, time() + 86400 * 100, '/');
-  mysql_query('INSERT INTO `sessions` (`key`, `first_visit`, `last_seen`) VALUES ("'.$s_unique_id.'", '.time().', '.time().')');
+  mysql_query('INSERT INTO `sessions` (`key`, `first_visit`, `last_seen`, `config_info`) VALUES ("'.$s_unique_id.'", '.time().', '.time().', \''.serialize(array()).'\')');
 }
 
+function update_config_info() {
+  global $session_info;
+  $x = serialize($session_info['config_info']);
+  mysql_query('UPDATE `sessions` SET `config_info` = \''.$x.'\' WHERE `key` = "'.$_COOKIE['session_key'].'"');
+}
 
 // ------------------------
 
@@ -30,5 +35,7 @@ if(isset($_COOKIE['session_key'])) {
   gen_new_session();
 }
 
+$session_info = mysql_fetch_assoc(mysql_query('SELECT * FROM `sessions` WHERE `key` = "'.$_COOKIE['session_key'].'"'));
+$session_info['config_info'] = unserialize($session_info['config_info']);
 
 ?>

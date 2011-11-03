@@ -4,8 +4,20 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
+$x = array();
+$r = mysql_query('SELECT * FROM `rooms` ORDER BY `dorm_id` ASC');
+while($w = mysql_fetch_assoc($r)) {
+  $x[] = $w;
+}
+
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../2-style/style.php";</script>');	
+  $session_info['config_info']['dorm_id'] = (int)$_POST['dorm'];
+  $session_info['config_info']['room_type'] = (int)$_POST['room'];
+
+  update_config_info();
+
+  header("Location: ../home.php");
+  die();
 }
 
 ?>
@@ -27,22 +39,58 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cancel</a>',
 		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="check">Save</a>'); 
 ?>
-    <div data-role="content" data-theme="e">
+    <div data-role="content">
       <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
       <div data-role="fieldcontain">
-	  <label for="dorm-name">Dorm Name</label>
-	  <select name="dorm-name" id="dorm-name-select">
-	    <option value="FroSoCo">FroSoCo</option>
-	    <option value="Branner">Branner</option>
-	    <option value="Crothers Memorial">Crothers Memorial</option>
+	  <label for="dorm">Dorm Name</label>
+	  <select onchange="gorefresh()" name="dorm" id="dorm-select">
+	    <?php
+	      $r = mysql_query('SELECT * FROM `dorms` WHERE `school_id` = '.$session_info['school_id']);
+	      while($q = mysql_fetch_assoc($r)) {
+	    ?>
+	      <option <?php if(isset($_GET['d']) && $_GET['d'] == $q['id']) echo 'selected="selected"'; ?> value="<?php echo $q['id']; ?>"><?php echo $q['dorm_name']; ?></option>
+	    <?php
+	      }
+	    ?>
 	  </select>
       </div>        
       <div data-role="fieldcontain">
-	  <label for="name">Room Number:</label>
-	  <input type="number" name="room_number" id="room_number" value=""  />
+	  <label for="name">Room Type:</label>
+	  <select name="room" id="room-select">
+
+	  </select>
       </div>	
       </form>
     </div> 
 </div> 
+<script language="javascript">
+
+// stupid fix
+function gorefresh() {
+  dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
+  window.location = 'pick.php?d=' + dorm_id;
+}
+
+var dormoptions = <?php echo json_encode($x); ?>;
+
+function gochangeoptions() {
+  dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
+
+  while(document.getElementById('room-select').length > 0) document.getElementById('room-select').remove(0);
+  for(i = 0; i < dormoptions.length; i++) {
+    if(dormoptions[i]['dorm_id'] == dorm_id) {
+      var o = document.createElement("option");
+      o.text = dormoptions[i]['name'];
+      o.value = dormoptions[i]['id'];
+      document.getElementById('room-select').add(o);
+    }
+  }
+
+  $.trigger('updatelayout');
+}
+
+gochangeoptions();
+
+</script>
 </body>
 </html>
