@@ -7,10 +7,27 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 $i = -1;
 $objects = array();
 
-if(isset($_SESSION['objects'])) {
-	$objects = $_SESSION['objects'];
+if(!isset($session_info['config_info']['room_config'])) {
+  $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id']);
+  $objects = array();
+  $i = 0;
+  while($obj = mysql_fetch_assoc($obj_r)) {
+    $objects[$i] = array();
+    $objects[$i]['name'] = $obj['name'];
+    $objects[$i]['graphic'] = unserialize($obj['graphic']);
+    $objects[$i]['position'] = unserialize($obj['position']);
+    $objects[$i]['size'] = unserialize($obj['size']);
+    
+    $i++;
+  }
+
+  for($i = 0; $i < count($objects); $i++) {
+    $objects[$i]['collide'] = false;
+    $objects[$i]['selected'] = false;
+    $objects[$i]['rotation'] = 0;
+  }
 } else {
-	require('default.php');
+  $objects = $session_info['config_info']['room_config'];
 }
 
 ?>
@@ -69,17 +86,20 @@ function gestureXY(e) {
 }
 
 function gestureEnd(e) {
-
+	$.post('save.php', { objects: JSON.stringify(objects) }, function(data) { });
 }
 
 function loadImages() {
 	for(i = 0; i < objects.length; i++) {
-		loadedImgObjs[i] = new Image();
-		loadedImgObjs[i].onload = function() {
-			if(++loadedImages >= objects.length)
-				drawObjects();
+		loadedImgObjs[i] = new Array();
+		for(j = 0; j < objects[i]['graphic'].length; j++) {
+			loadedImgObjs[i][j] = new Image();
+			loadedImgObjs[i][j].onload = function() {
+				if(++loadedImages >= objects.length)
+					drawObjects();
+			}
+			loadedImgObjs[i][j].src = objects[i]['graphic'][0];
 		}
-		loadedImgObjs[i].src = objects[i]['graphic'];
 	}
 }
 
@@ -87,14 +107,25 @@ function drawObjects() {
 	ctx.clearRect(0,0, can.width,can.height);
 	
 	for(i = 0; i < objects.length; i++) {
-		ctx.drawImage(loadedImgObjs[i], objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
+		ctx.drawImage(loadedImgObjs[i][0], 
+			      objects[i]['position']['x'], 
+			      objects[i]['position']['y'], 
+			      objects[i]['size']['width'], 
+			      objects[i]['size']['height']);
+
 		if(objects[i]['collide']) {		
 			ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
+			ctx.fillRect(objects[i]['position']['x'], 
+				     objects[i]['position']['y'], 
+				     objects[i]['size']['width'], 
+				     objects[i]['size']['height']);
 		}
 		if(objects[i]['selected']) {		
 			ctx.fillStyle = 'rgba(255, 0, 255, 0.5)';
-			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
+			ctx.fillRect(objects[i]['position']['x'], 
+				     objects[i]['position']['y'], 
+				     objects[i]['size']['width'], 
+				     objects[i]['size']['height']);
 		}	
 	}
 }
@@ -104,9 +135,7 @@ function touchUp(e) {
 	checkCollide();
 	drawObjects();
 	
-	$.post('save.php', { objects: JSON.stringify(objects) }, function(data) {
-
-	});	
+	$.post('save.php', { objects: JSON.stringify(objects) }, function(data) { });	
 }
  
 function touchDown(e) {
@@ -221,18 +250,18 @@ function saveConfigurationAndCheckOut() {
 
 $(document).ready(function () {
   init();
-  setTimeout('drawObjects();', 3000);
+  setInterval('drawObjects();', 300);
 });
 
 </script>
 </head>
 
 <body>
-<div data-role="page">  
-<canvas id="can" width="318" height="370" style="border:1px solid black">
+<div data-role="page"  data-theme="e">  
+<canvas id="can" width="318" height="370" style="border:1px solid white">
 
 </canvas>
-<div data-role="footer" class="ui-bar">
+<div data-role="footer" class="ui-bar"  data-theme="e">
 	<a href="add.php" data-rel="dialog" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
     <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
 </div>

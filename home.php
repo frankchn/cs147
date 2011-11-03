@@ -41,7 +41,7 @@ if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
 	  <?php if($session_info['school_id'] != -1) { ?>
 	  <li><a href="1-dormroom/pick.php">Dorm Room</a></li>
 	  <li><a href="2-style/style.php">Style</a></li>
-	  <?php if(isset($session_info['config_info']['dorm_id'])) { ?>
+	  <?php if(isset($session_info['config_info']['dorm_id']) && isset($session_info['config_info']['style_id'])) { ?>
 	  <li><a href="3-editor/index.php">Decorate</a></li>        
 	  <li><a href="4-checkout/choose.php">Checkout</a></li>
 	  <?php } ?>

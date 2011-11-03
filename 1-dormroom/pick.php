@@ -65,7 +65,7 @@ generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cance
 </div> 
 <script language="javascript">
 
-// stupid fix
+// stupid fix 
 function gorefresh() {
   dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
   window.location = 'pick.php?d=' + dorm_id;
@@ -89,7 +89,8 @@ function gochangeoptions() {
   $.trigger('updatelayout');
 }
 
-gochangeoptions();
+$(function() {  gochangeoptions();
+});
 
 </script>
 </body>

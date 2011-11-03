@@ -5,7 +5,10 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../home.php";</script>');	
+	$session_info['config_info']['style_id'] = (int)$_POST['style'];
+	update_config_info();
+	header("Location: ../home.php");
+	die();	
 }
 
 ?>
@@ -31,11 +34,14 @@ generate_header('Pick A Style', '<a href="../home.php" data-icon="delete">Cancel
       <form id="manualform" method="post" action="style.php?store=1" data-ajax="false">
 	  <fieldset data-role="controlgroup">
 	      <?php
+	      $i = 0;
 	      $s_r = mysql_query('SELECT * FROM `styles`');
 	      while($s = mysql_fetch_assoc($s_r)) {
-		printf('<input type="radio" name="style" id="contemp" value="%s" checked="checked" /><label for="contemp">%s</label>',
-		       $s['id'],
+		printf('<input %s type="radio" name="style" id="a_%s" value="%s" /><label for="a_%s">%s</label>',
+		       ($i == 0) ? "checked" : "",
+		       $s['id'], $s['id'], $s['id'],
 		       $s['name']);
+		$i++;
 	      }
 	      ?>
 	  </fieldset>
