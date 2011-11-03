@@ -47,9 +47,29 @@ function init() {
     can.addEventListener("touchmove", touchXY, true);
     can.addEventListener("touchend", touchUp, false); 
  
+    can.addEventListener("gesturestart", gestureStart, false);
+    can.addEventListener("gesturechange", gestureXY, true);
+    can.addEventListener("gestureend", gestureEnd, false); 
+
     document.body.addEventListener("touchcancel", touchUp, false);
 	
-	loadImages();
+    loadImages();
+}
+
+function gestureStart(e) {
+  
+}
+
+function gestureXY(e) {
+  if(selectMoveIndex == -1) return;
+
+  objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + e.rotation) % 360;
+
+  drawObjects();
+}
+
+function gestureEnd(e) {
+
 }
 
 function loadImages() {
@@ -68,17 +88,10 @@ function drawObjects() {
 	
 	for(i = 0; i < objects.length; i++) {
 		ctx.drawImage(loadedImgObjs[i], objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
-		
-	}
-	
-	for(i = 0; i < objects.length; i++) {
 		if(objects[i]['collide']) {		
 			ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
-		}	
-	}
-	
-	for(i = 0; i < objects.length; i++) {
+		}
 		if(objects[i]['selected']) {		
 			ctx.fillStyle = 'rgba(255, 0, 255, 0.5)';
 			ctx.fillRect(objects[i]['position']['x'], objects[i]['position']['y'], objects[i]['size']['width'], objects[i]['size']['height']);
@@ -98,61 +111,78 @@ function touchUp(e) {
  
 function touchDown(e) {
     e.preventDefault();
-	
-	canX = e.targetTouches[0].pageX - can.offsetLeft;
-	canY = e.targetTouches[0].pageY - can.offsetTop;
-	
-	for(i = 0; i < objects.length; i++) {
-		if(objects[i]['position']['x'] <= canX && objects[i]['position']['x'] + objects[i]['size']['width'] >= canX &&
-		   objects[i]['position']['y'] <= canY && objects[i]['position']['y'] + objects[i]['size']['height'] >= canY) {
-			   newselectMoveIndex = i;
-		}
-	    objects[i]['selected'] = false;		
-	}
 
-	objects[newselectMoveIndex]['selected'] = true;	
-	selectIndex = newselectMoveIndex;
-	
-	if(waitingForSecond == -1) {
-		waitingForSecond = 	newselectMoveIndex;
-		setTimeout('clearSecond()', 400);
-	} else if(waitingForSecond == newselectMoveIndex) {
-		$('#manipulate_object').click();
-		clearSecond();	
-	} else {
-		clearSecond();	
-	}
-	
-	selectMoveIndex = newselectMoveIndex;
-	
-	drawObjects();
+    if(e.targetTouches.length == 1) {
+
+      // translation
+
+      canX = e.targetTouches[0].pageX - can.offsetLeft;
+      canY = e.targetTouches[0].pageY - can.offsetTop;
+      
+      for(i = 0; i < objects.length; i++) {
+	      if(objects[i]['position']['x'] <= canX && objects[i]['position']['x'] + objects[i]['size']['width'] >= canX &&
+		  objects[i]['position']['y'] <= canY && objects[i]['position']['y'] + objects[i]['size']['height'] >= canY) {
+			  newselectMoveIndex = i;
+	      }
+	  objects[i]['selected'] = false;		
+      }
+
+      objects[newselectMoveIndex]['selected'] = true;	
+      selectIndex = newselectMoveIndex;
+      
+      if(waitingForSecond == -1) {
+	      waitingForSecond = 	newselectMoveIndex;
+	      setTimeout('clearSecond()', 400);
+      } else if(waitingForSecond == newselectMoveIndex) {
+	      $('#manipulate_object').click();
+	      clearSecond();	
+      } else {
+	      clearSecond();	
+      }
+      
+      selectMoveIndex = newselectMoveIndex;
+
+    } else {
+
+      // rotation, we don't need to do anything
+
+    }
+    
+    drawObjects();
 }
  
 function clearSecond() {
 	waitingForSecond = -1;
 }
- 
+
 function touchXY(e) {
     if (!e) var e = event;
-    e.preventDefault();
-		
-	if(selectMoveIndex == -1) return;
-		
-    var newcanX = e.targetTouches[0].pageX - can.offsetLeft;
-    var newcanY = e.targetTouches[0].pageY - can.offsetTop;
-	
-	var deltaX = newcanX - canX;
-	var deltaY = newcanY - canY;
-	
-	checkCollide();
+    e.preventDefault();	
+    if(selectMoveIndex == -1) return;
 
-	objects[selectMoveIndex]['position']['x'] += deltaX;
-	objects[selectMoveIndex]['position']['y'] += deltaY; 
-	
-	canX = newcanX;
-	canY = newcanY;
+    if(e.targetTouches.length == 1) {
 
-	drawObjects();
+      // translation
+
+      var newcanX = e.targetTouches[0].pageX - can.offsetLeft;
+      var newcanY = e.targetTouches[0].pageY - can.offsetTop;
+	  
+      var deltaX = newcanX - canX;
+      var deltaY = newcanY - canY;
+      
+      checkCollide();
+
+      objects[selectMoveIndex]['position']['x'] += deltaX;
+      objects[selectMoveIndex]['position']['y'] += deltaY; 
+      
+      canX = newcanX;
+      canY = newcanY;
+
+      drawObjects();
+
+    } else {
+
+    }
 }
 
 function checkCollide() {
@@ -204,7 +234,6 @@ $(document).ready(function () {
 </canvas>
 <div data-role="footer" class="ui-bar">
 	<a href="add.php" data-rel="dialog" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
-    <a href="#" data-role="button" data-icon="forward">Rotate</a>
     <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
 </div>
 

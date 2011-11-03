@@ -4,6 +4,22 @@ $ROOT_PREFIX = '';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
+// --------------------------
+
+if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
+  $loc['longitude'] = (double)$_GET['longitude'];
+  $loc['latitude']  = (double)$_GET['latitude'];
+
+  $z = serialize($loc);
+
+  // HACK HACK HACK
+  // we also check here and update the school - now we just assume stanford
+  $school_id = 1;
+  mysql_query('UPDATE `sessions` SET `geolocation` = \''.serialize($loc).'\', `school_id` = '.$school_id.' WHERE `id` = '.$session_info['id']);
+
+  print(mysql_error());
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,22 +33,19 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 </head>
 
-<body>
-<div data-role="page">  
-    <div data-role="header"> 
-        <h1>DormDecor</h1> 
+<body data-theme="e">
+<div data-role="page" data-theme="e">  
+    <?php generate_header(); ?>
+    <div data-role="content" data-theme="e">
+      <ul data-role="listview" data-theme="e">
+	  <li><a href="0-location/manual.php">School</a></li>
+	  <li><a href="1-dormroom/pick.php">Dorm Room</a></li>
+	  <li><a href="2-style/style.php">Style</a></li>
+	  <li><a href="3-editor/index.php">Decorate</a></li>        
+	  <li><a href="4-checkout/choose.php">Checkout</a></li>
+	  <li><a href="help.php">Help</a></li>
+      </ul>
     </div> 
-	<div data-role="content">
-    <ul data-role="listview" data-theme="g">
-    	<li><a href="0-location/manual.php">School</a></li>
-    	<li><a href="1-dormroom/pick.php">Dorm Room</a></li>
-		<li><a href="2-style/style.php">Style</a></li>
-		<li><a href="3-editor/index.php">Decorate</a></li>        
-		<li><a href="4-checkout/choose.php">Checkout</a></li>
-        <li><a href="help.php">Help</a></li>
-	</ul>
-        
-	</div> 
 </div> 
 </body>
 </html>

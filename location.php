@@ -18,6 +18,20 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 <script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
 <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 
+<script language="javascript">
+
+function successHandler(location) {
+	window.location = 'home.php?longitude=' + location.coords.longitude + '&latitude=' + location.coords.latitude + '&accuracy = ' + location.coords.accuracy;
+}
+
+function errorHandler(error) {
+	window.location = '0-location/manual.php';
+}
+
+navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
+
+</script>
+
 </head>
 
 <body>
@@ -25,13 +39,7 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 	<div data-role="content">
     	<img src="images/logo_large.png" />
         <hr />
-        <div>
-	  Some introduction to what dorm decor is and so on. To be filled in later.
-	</div>
-	<hr />
-	<div>
-	  <input type="button" value="Continue..." onClick="window.location='location.php'">
-	</div>
+        <center>Your one-stop shop for the perfect dorm room!</center>
     </div> 
 </div> 
 </body>

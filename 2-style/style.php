@@ -22,33 +22,31 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 </head>
 
 <body>
-<div data-role="page">  
-    <div data-role="header"> 
-        <h1>Pick a Style</h1> 
+<div data-role="page" data-theme="e">  
+<?php 
+generate_header('Pick A Style', '<a href="../home.php" data-icon="delete">Cancel</a>',
+		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="check">Save</a>'); 
+?>
+    <div data-role="content">
+      <form id="manualform" method="post" action="style.php?store=1" data-ajax="false">
+      <div data-role="fieldcontain">
+	  <fieldset data-role="controlgroup">
+	      <input type="radio" name="style" id="contemp" value="contemporary" checked="checked" />
+		      <label for="contemp">Contemporary</label>
+	      <input type="radio" name="style" id="modern" value="modern"/>
+		      <label for="modern">Modern</label>
+	      <input type="radio" name="style" id="art" value="art"/>
+		      <label for="art">Art Deco</label>
+		<input type="radio" name="style" id="tropical" value="tropical"/>
+		      <label for="tropical">Tropical</label>
+		<input type="radio" name="style" id="retro" value="retro"/>
+		      <label for="retro">Retro</label>
+		<input type="radio" name="style" id="med" value="med"/>
+		      <label for="med">Mediterranean</label>
+	  </fieldset>
+      </div>
+      </form>
     </div> 
-	<div data-role="content">
-    	<form method="post" action="style.php?store=1" data-ajax="false">
-        <div data-role="fieldcontain">
-	    <fieldset data-role="controlgroup">
-		<input type="radio" name="style" id="contemp" value="contemporary" checked="checked" />
-			<label for="contemp">Contemporary</label>
-		<input type="radio" name="style" id="modern" value="modern"/>
-			<label for="modern">Modern</label>
-		<input type="radio" name="style" id="art" value="art"/>
-			<label for="art">Art Deco</label>
-        	 <input type="radio" name="style" id="tropical" value="tropical"/>
-			<label for="tropical">Tropical</label>
-        	 <input type="radio" name="style" id="retro" value="retro"/>
-			<label for="retro">Retro</label>
-        	 <input type="radio" name="style" id="med" value="med"/>
-			<label for="med">Mediterranean</label>
-	    </fieldset>
-	</div>
-        <div data-role="fieldcontain">
-        	<button type="submit" data-theme="b" name="submit" value="submit-value">Save &amp; Continue</button>
-        </div>
-        </form>
-	</div> 
 </div> 
 </body>
 </html>

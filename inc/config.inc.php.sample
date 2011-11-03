@@ -1,11 +1,13 @@
 <?php
 
-error_reporting(E_ALL);
-session_start();
+error_reporting(E_ALL | E_STRICT);
 
 $db['username'] = '';
 $db['password'] = '';
 $db['hostname'] = '';
 $db['database'] = '';
+
+mysql_connect($db['hostname'], $db['username'], $db['password']);
+mysql_select_db($db['database']);
 
 ?>

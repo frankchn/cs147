@@ -5,6 +5,12 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
+if(isset($_GET['submit'])) {
+  $school_id = (int)$_POST['school_id'];
+  mysql_query('UPDATE `sessions` SET `school_id` = '.$school_id.' WHERE `id` = '.$session_info['id']);
+  header("Location: ../home.php");
+  die();
+}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,13 +28,28 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 
 <body>
 <div data-role="page" data-theme="e">  
-	<div data-role="content">
-    	<img src="../images/logo_large.png" />
-        <hr />
-        <?php var_dump($_GET); ?>
-        <hr />
-        Oops, this isn't implemented yet. (The above message shows your longitude and latitude in coordinates.) <a href="../home.php">Click here</a>.
-    </div> 
+<?php 
+generate_header('Select School',
+		'<a href="../home.php" data-icon="delete">Cancel</a>',
+		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="check">Save</a>'); 
+?>
+  <form id="manualform" action="manual.php?submit=1" method="post" data-ajax="false"> 
+    <div data-role="fieldcontain">
+    <label for="school_id" class="select">
+      Your School:
+    </label>
+    <select name="school_id" id="select-choice-1">
+      <?php 
+	$r = mysql_query('select * from schools');
+	while($s = mysql_fetch_assoc($r)) {
+       ?>
+      <option value="<?php echo $s['id'] ?>"><?php echo $s['name'] ?></option>
+      <?php
+	}
+      ?>
+    </select>    
+    </div>
+  </form>
 </div> 
 </body>
 </html>

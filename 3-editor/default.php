@@ -34,7 +34,8 @@ $objects[$i]['size']     = array('width' => 109, 'height' => 78);
 
 for($i = 0; $i < count($objects); $i++) {
 	$objects[$i]['collide'] = false;
-	$objects[$i]['selected'] = false;	
+	$objects[$i]['selected'] = false;
+	$objects[$i]['rotation'] = 0;
 }
 
 ?>

@@ -22,30 +22,27 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 </head>
 
 <body>
-<div data-role="page">  
-    <div data-role="header"> 
-        <h1>Dorm Location</h1> 
+<div data-role="page" data-theme="e">  
+<?php 
+generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cancel</a>',
+		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="check">Save</a>'); 
+?>
+    <div data-role="content" data-theme="e">
+      <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
+      <div data-role="fieldcontain">
+	  <label for="dorm-name">Dorm Name</label>
+	  <select name="dorm-name" id="dorm-name-select">
+	    <option value="FroSoCo">FroSoCo</option>
+	    <option value="Branner">Branner</option>
+	    <option value="Crothers Memorial">Crothers Memorial</option>
+	  </select>
+      </div>        
+      <div data-role="fieldcontain">
+	  <label for="name">Room Number:</label>
+	  <input type="number" name="room_number" id="room_number" value=""  />
+      </div>	
+      </form>
     </div> 
-	<div data-role="content">
-    	<form method="post" action="pick.php?store=1" data-ajax="false">
-        <div>Sorry, we were not able to locate your dorm automatically. Please enter your dorm and dorm room manually.</div>
-        <div data-role="fieldcontain">
-            <label for="dorm-name">Dorm Name</label>
-            <select name="dorm-name" id="dorm-name-select">
-                <option value="FroSoCo">FroSoCo</option>
-                <option value="Branner">Branner</option>
-                <option value="Crothers Memorial">Crothers Memorial</option>
-            </select>
-        </div>        
-        <div data-role="fieldcontain">
-            <label for="name">Room Number:</label>
-            <input type="number" name="room_number" id="room_number" value=""  />
-        </div>	
-        <div data-role="fieldcontain">
-        	<button type="submit" data-theme="b" name="submit" value="submit-value">Save &amp; Continue</button>
-        </div>
-        </form>
-	</div> 
 </div> 
 </body>
 </html>
