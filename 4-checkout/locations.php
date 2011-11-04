@@ -165,7 +165,7 @@ generate_header('Store Locations', '<a href="../home.php" data-icon="back">Back<
 ?>
     <div data-role="content">
     <div>
-     <input type="text" id="addressInput" size="10"/>
+     <input type="text" value="94305" id="addressInput" size="10"/>
     <select id="radiusSelect">
       <option value="25" selected>25mi</option>
       <option value="100">100mi</option>
