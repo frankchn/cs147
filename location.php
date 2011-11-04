@@ -25,7 +25,7 @@ function successHandler(location) {
 }
 
 function errorHandler(error) {
-	window.location = '0-location/manual.php';
+	window.location = 'home.php';
 }
 
 navigator.geolocation.getCurrentPosition(successHandler, errorHandler);

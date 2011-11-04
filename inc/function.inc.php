@@ -25,6 +25,18 @@ function update_config_info() {
   mysql_query('UPDATE `sessions` SET `config_info` = \''.$x.'\' WHERE `key` = "'.$_COOKIE['session_key'].'"');
 }
 
+
+function object_to_array($Class){
+    $Class = (array)$Class;
+
+    foreach($Class as $key => $value){
+	if(is_object($value)&&get_class($value)==='stdClass'){
+	    $Class[$key] = object_to_array($value);
+	}
+    }
+    return $Class;
+}
+
 // ------------------------
 
 if(isset($_COOKIE['session_key'])) {

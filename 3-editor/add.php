@@ -5,7 +5,32 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
+// shim to fix weird behavior
+$session_info['config_info']['room_config'] = object_to_array($session_info['config_info']['room_config']);
 
+if(isset($_GET['id'])) {
+
+  $r = mysql_fetch_assoc(mysql_query('SELECT * FROM `objects` WHERE `id` = '.((int)$_GET['id'])));
+  
+  $x = count($session_info['config_info']['room_config']);
+
+  $session_info['config_info']['room_config'][$x] = $r;
+  $session_info['config_info']['room_config'][$x]['graphic'] = unserialize($session_info['config_info']['room_config'][$x]['graphic']);
+  $session_info['config_info']['room_config'][$x]['position'] = unserialize($session_info['config_info']['room_config'][$x]['position']);
+  $session_info['config_info']['room_config'][$x]['size'] = unserialize($session_info['config_info']['room_config'][$x]['size']);
+
+  $session_info['config_info']['room_config'][$x]['collide'] = false;
+  $session_info['config_info']['room_config'][$x]['selected'] = false;
+  $session_info['config_info']['room_config'][$x]['rotation'] = 0;
+
+  update_config_info();
+
+  header("Location: index.php");
+  die();
+
+}
+
+var_dump($session_info['config_info']['room_config']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,18 +46,40 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 </head>
 
 <body>
-<div data-role="page">
-	
-		<div data-role="header" data-theme="d">
-			<h1>Add Object</h1>
+<div data-role="page"  data-theme="e">
+<?php 
+generate_header('Add Object', '<a data-ajax="false" data-transition="slideup" href="index.php" data-icon="delete">Cancel</a>'); 
+?>
+    <div data-role="content" data-theme="e">
+	<ul data-role="listview">
+	    <?php
+	      $c = 0;
+	      $r = mysql_query('SELECT * FROM `objects` WHERE `style_id` = '.$session_info['config_info']['style_id']);
+	      while($o = mysql_fetch_assoc($r)) {
+		$already_in = false;
+		foreach($session_info['config_info']['room_config'] as $v) {
+		  if($v['id'] == $o['id']) $already_in = true;
+		}
+		if(!$already_in) {
+		  $c++;
+	    ?>
+	    <li><a data-ajax="false" href="add.php?id=<?php echo $o['id']; ?>">
+		    <img src="<?php echo $o['thumbnail'] ?>" />
+		    <h3><?php echo $o['name']; ?></h3>
+		    <p><?php echo $o['short_desc']; ?></p>
+	    </a></li>
+	    <?php
+		}
+	      }
 
-		</div>
-
-		<div data-role="content" data-theme="c">
-			<p>Add object</p>
-			<a href="docs-dialogs.html" data-role="button" data-rel="back" data-theme="b">Sounds good</a>       
-			<a href="docs-dialogs.html" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
-		</div>
-	</div>
+	      if($c == 0) {
+	    ?>
+	      <li>Sorry, there are no items available.</li>
+	    <?php
+	      }
+	    ?>
+	</ul>
+    </div>
+</div>
 </body>
 </html>

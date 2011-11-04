@@ -21,17 +21,16 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 </head>
 
 <body>
-<div data-role="page">
+<div data-role="page" data-theme="e">
 	
-		<div data-role="header" data-theme="d">
+		<div data-role="header" data-theme="e">
 			<h1>Manipulate Object</h1>
 
 		</div>
 
-		<div data-role="content" data-theme="c">
-			<p>Manipulate object</p>
-			<a href="docs-dialogs.html" data-role="button" data-rel="back" data-theme="b">Sounds good</a>       
-			<a href="docs-dialogs.html" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
+		<div data-role="content" data-theme="e">
+			&nbsp;<br>
+			<a href="delete.php?k=<?php echo $_GET['k']; ?>" data-role="button" data-ajax="false" data-theme="e">Delete</a>       
 		</div>
 	</div>
 </body>

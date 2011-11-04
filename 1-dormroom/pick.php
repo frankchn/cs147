@@ -4,12 +4,6 @@ $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
-$x = array();
-$r = mysql_query('SELECT * FROM `rooms` ORDER BY `dorm_id` ASC');
-while($w = mysql_fetch_assoc($r)) {
-  $x[] = $w;
-}
-
 if(isset($_GET['store']) && $_GET['store'] == 1) {
   $session_info['config_info']['dorm_id'] = (int)$_POST['dorm'];
   $session_info['config_info']['room_type'] = (int)$_POST['room'];
@@ -45,8 +39,10 @@ generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cance
 	  <label for="dorm">Dorm Name</label>
 	  <select onchange="gorefresh()" name="dorm" id="dorm-select">
 	    <?php
+	      $start = -1;
 	      $r = mysql_query('SELECT * FROM `dorms` WHERE `school_id` = '.$session_info['school_id']);
 	      while($q = mysql_fetch_assoc($r)) {
+		if($start == -1) $start = $q['id'];
 	    ?>
 	      <option <?php if(isset($_GET['d']) && $_GET['d'] == $q['id']) echo 'selected="selected"'; ?> value="<?php echo $q['id']; ?>"><?php echo $q['dorm_name']; ?></option>
 	    <?php
@@ -57,7 +53,15 @@ generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cance
       <div data-role="fieldcontain">
 	  <label for="name">Room Type:</label>
 	  <select name="room" id="room-select">
-
+	    <?php
+	      if(isset($_GET['d'])) $g = (int)$_GET['d']; else $g = $start;
+	      $r = mysql_query('SELECT * FROM `rooms` WHERE `dorm_id` = '.$g);
+	      while($s = mysql_fetch_assoc($r)) {
+	    ?>
+	      <option value="<?php echo $s['id'] ?>"><?php echo $s['name'] ?></option>
+	    <?php
+	      }
+	    ?>
 	  </select>
       </div>	
       </form>
@@ -70,27 +74,6 @@ function gorefresh() {
   dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
   window.location = 'pick.php?d=' + dorm_id;
 }
-
-var dormoptions = <?php echo json_encode($x); ?>;
-
-function gochangeoptions() {
-  dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
-
-  while(document.getElementById('room-select').length > 0) document.getElementById('room-select').remove(0);
-  for(i = 0; i < dormoptions.length; i++) {
-    if(dormoptions[i]['dorm_id'] == dorm_id) {
-      var o = document.createElement("option");
-      o.text = dormoptions[i]['name'];
-      o.value = dormoptions[i]['id'];
-      document.getElementById('room-select').add(o);
-    }
-  }
-
-  $.trigger('updatelayout');
-}
-
-$(function() {  gochangeoptions();
-});
 
 </script>
 </body>

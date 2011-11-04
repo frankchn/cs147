@@ -7,12 +7,15 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 $i = -1;
 $objects = array();
 
+        
+
 if(!isset($session_info['config_info']['room_config'])) {
-  $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id']);
+  $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
   $objects = array();
   $i = 0;
   while($obj = mysql_fetch_assoc($obj_r)) {
     $objects[$i] = array();
+    $objects[$i]['id'] = $obj['id'];
     $objects[$i]['name'] = $obj['name'];
     $objects[$i]['graphic'] = unserialize($obj['graphic']);
     $objects[$i]['position'] = unserialize($obj['position']);
@@ -26,8 +29,15 @@ if(!isset($session_info['config_info']['room_config'])) {
     $objects[$i]['selected'] = false;
     $objects[$i]['rotation'] = 0;
   }
+
+  $session_info['config_info']['room_config'] = $objects;
+  update_config_info();
 } else {
-  $objects = $session_info['config_info']['room_config'];
+  $objects = object_to_array($session_info['config_info']['room_config']);
+}
+
+for($i = 0; $i < count($objects); $i++) {
+  $objects[$i]['selected'] = false;
 }
 
 ?>
@@ -56,6 +66,8 @@ var loadedImages = 0;
 var loadedImgObjs = [];
 var objects = <?php echo json_encode($objects); ?>;
 
+var rotated_this_round = false;
+
 function init() {
     can = document.getElementById("can");
     ctx = can.getContext("2d");
@@ -74,19 +86,30 @@ function init() {
 }
 
 function gestureStart(e) {
-  
+    e.preventDefault();	
+
+
+  rotated_this_round = false;
 }
 
 function gestureXY(e) {
+  e.preventDefault();	
+
   if(selectMoveIndex == -1) return;
-
-  objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + e.rotation) % 360;
-
   drawObjects();
 }
 
 function gestureEnd(e) {
-	$.post('save.php', { objects: JSON.stringify(objects) }, function(data) { });
+  e.preventDefault();	
+  
+  if(e.rotation > 50 || e.rotation < -50) {
+    objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + 1) % 2;
+    var tmp = objects[selectMoveIndex]['size']['width'];
+    objects[selectMoveIndex]['size']['width'] =  objects[selectMoveIndex]['size']['height'];
+    objects[selectMoveIndex]['size']['height'] = tmp;
+  }
+
+  $.post('save.php', { objects: JSON.stringify(objects) }, function(data) { });
 }
 
 function loadImages() {
@@ -98,7 +121,7 @@ function loadImages() {
 				if(++loadedImages >= objects.length)
 					drawObjects();
 			}
-			loadedImgObjs[i][j].src = objects[i]['graphic'][0];
+			loadedImgObjs[i][j].src = objects[i]['graphic'][j];
 		}
 	}
 }
@@ -107,31 +130,33 @@ function drawObjects() {
 	ctx.clearRect(0,0, can.width,can.height);
 	
 	for(i = 0; i < objects.length; i++) {
-		ctx.drawImage(loadedImgObjs[i][0], 
+		obj_w = objects[i]['size']['width'];
+		obj_h = objects[i]['size']['height'];
+
+		ctx.drawImage(loadedImgObjs[i][objects[i]['rotation']], 
 			      objects[i]['position']['x'], 
 			      objects[i]['position']['y'], 
-			      objects[i]['size']['width'], 
-			      objects[i]['size']['height']);
+			      obj_w, 
+			      obj_h);
 
 		if(objects[i]['collide']) {		
 			ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 			ctx.fillRect(objects[i]['position']['x'], 
 				     objects[i]['position']['y'], 
-				     objects[i]['size']['width'], 
-				     objects[i]['size']['height']);
+				     obj_w, 
+				     obj_h);
 		}
 		if(objects[i]['selected']) {		
 			ctx.fillStyle = 'rgba(255, 0, 255, 0.5)';
 			ctx.fillRect(objects[i]['position']['x'], 
 				     objects[i]['position']['y'], 
-				     objects[i]['size']['width'], 
-				     objects[i]['size']['height']);
+				     obj_w, 
+				     obj_h);
 		}	
 	}
 }
 
 function touchUp(e) {
-	selectMoveIndex = -1;
 	checkCollide();
 	drawObjects();
 	
@@ -139,15 +164,18 @@ function touchUp(e) {
 }
  
 function touchDown(e) {
-    e.preventDefault();
 
     if(e.targetTouches.length == 1) {
 
       // translation
 
+    e.preventDefault();
+
       canX = e.targetTouches[0].pageX - can.offsetLeft;
       canY = e.targetTouches[0].pageY - can.offsetTop;
       
+      var newselectMoveIndex = -1;
+
       for(i = 0; i < objects.length; i++) {
 	      if(objects[i]['position']['x'] <= canX && objects[i]['position']['x'] + objects[i]['size']['width'] >= canX &&
 		  objects[i]['position']['y'] <= canY && objects[i]['position']['y'] + objects[i]['size']['height'] >= canY) {
@@ -156,13 +184,17 @@ function touchDown(e) {
 	  objects[i]['selected'] = false;		
       }
 
-      objects[newselectMoveIndex]['selected'] = true;	
       selectIndex = newselectMoveIndex;
+      if(newselectMoveIndex == -1) return;
+
+      objects[newselectMoveIndex]['selected'] = true;	
+
       
       if(waitingForSecond == -1) {
 	      waitingForSecond = 	newselectMoveIndex;
 	      setTimeout('clearSecond()', 400);
       } else if(waitingForSecond == newselectMoveIndex) {
+	      $('#manipulate_object').attr('href', 'manipulate-object.php?k=' + newselectMoveIndex);
 	      $('#manipulate_object').click();
 	      clearSecond();	
       } else {
@@ -171,11 +203,7 @@ function touchDown(e) {
       
       selectMoveIndex = newselectMoveIndex;
 
-    } else {
-
-      // rotation, we don't need to do anything
-
-    }
+    } 
     
     drawObjects();
 }
@@ -186,10 +214,11 @@ function clearSecond() {
 
 function touchXY(e) {
     if (!e) var e = event;
-    e.preventDefault();	
     if(selectMoveIndex == -1) return;
 
     if(e.targetTouches.length == 1) {
+
+    e.preventDefault();	
 
       // translation
 
@@ -209,9 +238,7 @@ function touchXY(e) {
 
       drawObjects();
 
-    } else {
-
-    }
+    } 
 }
 
 function checkCollide() {
@@ -262,8 +289,9 @@ $(document).ready(function () {
 
 </canvas>
 <div data-role="footer" class="ui-bar"  data-theme="e">
-	<a href="add.php" data-rel="dialog" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
-    <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
+  <a data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
+  <a href="add.php"  data-ajax="false" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
+  <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
 </div>
 
 <div style="display:none">
