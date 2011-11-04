@@ -161,7 +161,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <body onload="load()">
 <div data-role="page" data-theme="e">  
 <?php 
-generate_header('Store Locations', '<a href="../home.php" data-icon="back">Back</a>');
+generate_header('Store Locations', '<a href="choose.php" data-icon="back">Back</a>');
 ?>
     <div data-role="content">
     <div>
