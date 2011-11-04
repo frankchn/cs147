@@ -27,12 +27,10 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 generate_header('Buy', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
 ?>
 	<div data-role="content">
-    	<form method="post" action="checkout.php?option=1" data-ajax="false">
         <div data-role="fieldcontain">
-        	<button type="submit" data-theme="b" name="submit" value="submit-value">Buy Items Online</button>
-        	<button type="submit" data-theme="b" name="submit" value="submit-value">View Store Locations</button>
+        	<button onClick="window.location='checkout.php'" data-theme="b">Buy Items Online</button>
+        	<button onClick="window.location='locations.php'" data-theme="b">View Store Locations</button>
         </div>
-        </form>
 	</div> 
 </div> 
 </body>

@@ -175,7 +175,7 @@ generate_header('Store Locations', '<a href="../home.php" data-icon="back">Back<
     <input type="button" onclick="searchLocations()" value="Search"/>
     </div>
     <div><select id="locationSelect" style="width:100%;visibility:hidden"></select></div>
-    <div id="map" style="width: 100%; height: 80%"></div>
+    <div id="map" style="width: 290px; height: 300px"></div>
 
     </div> 
 </div> 
