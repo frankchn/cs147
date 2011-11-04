@@ -37,7 +37,7 @@ generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cance
       <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
       <div data-role="fieldcontain">
 	  <label for="dorm">Dorm Name</label>
-	  <select onchange="gorefresh()" name="dorm" id="dorm-select">
+	  <select name="dorm" id="dorm-select">
 	    <?php
 	      $start = -1;
 	      $r = mysql_query('SELECT * FROM `dorms` WHERE `school_id` = '.$session_info['school_id']);
@@ -74,6 +74,10 @@ function gorefresh() {
   dorm_id = document.getElementById("dorm-select").options[document.getElementById("dorm-select").selectedIndex].value;
   window.location = 'pick.php?d=' + dorm_id;
 }
+
+$('#dorm-select').change(function(e) {
+  gorefresh();
+});
 
 </script>
 </body>
