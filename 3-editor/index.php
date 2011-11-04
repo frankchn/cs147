@@ -7,8 +7,6 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 $i = -1;
 $objects = array();
 
-        
-
 if(!isset($session_info['config_info']['room_config'])) {
   $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
   $objects = array();
@@ -184,14 +182,18 @@ function touchDown(e) {
 	  objects[i]['selected'] = false;		
       }
 
-      selectIndex = newselectMoveIndex;
-      if(newselectMoveIndex == -1) return;
+      if(newselectMoveIndex == -1) {
+	newselectMoveIndex = -1;
+	selectIndex = -1;
+	selectMoveIndex = -1;
+	return;
+      }
 
       objects[newselectMoveIndex]['selected'] = true;	
-
+      selectIndex = newselectMoveIndex;
       
       if(waitingForSecond == -1) {
-	      waitingForSecond = 	newselectMoveIndex;
+	      waitingForSecond = newselectMoveIndex;
 	      setTimeout('clearSecond()', 400);
       } else if(waitingForSecond == newselectMoveIndex) {
 	      $('#manipulate_object').attr('href', 'manipulate-object.php?k=' + newselectMoveIndex);
@@ -276,6 +278,7 @@ function saveConfigurationAndCheckOut() {
 
 
 $(document).ready(function () {
+  loadImages();
   init();
   setInterval('drawObjects();', 300);
 });

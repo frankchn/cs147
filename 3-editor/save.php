@@ -8,7 +8,7 @@ $data = json_decode($_POST['objects']);
 $session_info['config_info']['room_config'] = ($data);
 update_config_info();
 
-printf('../4-checkout/checkout.php');
+printf('../4-checkout/choose.php');
 
 
 ?>

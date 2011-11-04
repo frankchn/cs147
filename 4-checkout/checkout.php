@@ -8,6 +8,8 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 	die('<script>window.location = "../canvas/index.php";</script>');	
 }
 
+$objects = object_to_array($session_info['config_info']['room_config']);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,12 +24,23 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 </head>
 
 <body>
-<div data-role="page">  
-    <div data-role="header"> 
-        <h1>Checkout Page</h1> 
-    </div> 
+<div data-role="page" data-theme="e">  
+<?php 
+generate_header('Checkout', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>', 
+ '<a data-ajax="false" data-transition="slideup" href="#" data-icon="arrow-r">Buy</a>'); 
+?>
 	<div data-role="content">
-    	You will be presented with your list of items here.
+	  <ul data-role="listview">
+	  <?php
+	  foreach($objects as $k => $v) {
+	    if(isset($v['name'])) {
+	    ?>
+	    <li><?php echo $v['name']; ?></li>
+	  <?php
+	    }
+	  }
+	  ?>
+	  </ul>
 	</div> 
 </div> 
 </body>

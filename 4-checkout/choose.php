@@ -22,10 +22,10 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 </head>
 
 <body>
-<div data-role="page">  
-    <div data-role="header"> 
-        <h1>Checkout Options</h1> 
-    </div> 
+<div data-role="page" data-theme="e">  
+<?php 
+generate_header('Buy', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
+?>
 	<div data-role="content">
     	<form method="post" action="checkout.php?option=1" data-ajax="false">
         <div data-role="fieldcontain">
