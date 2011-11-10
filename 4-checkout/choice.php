@@ -52,7 +52,6 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 	<div data-role="content">
         <div data-role="fieldcontain">
 		<?php echo $_POST["store"]; ?>
-		<?php echo $store_choice; ?>
         </div>
 	</div> 
 </div> 
