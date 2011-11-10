@@ -175,8 +175,8 @@ generate_header('Store Locations', '<a href="choose.php" data-icon="back">Back</
     <input type="button" onclick="searchLocations()" value="Search"/>
     </div>
 	<form id="location" method="post" action="choice.php" data-ajax="false"> 
-	    <div><select id="locationSelect" name="store" style="width:100%;visibility:hidden"></select></div>
-	    <input type="submit" value="Choose this location!"/>
+	    <div><select id="locationSelect" value="Select your store choice" name="store" style="width:100%;visibility:hidden"></select></div>
+	    <input type="submit" value="Choose this store!"/>
 	</form>
     <div id="map" style="width: 290px; height: 300px"></div>
 

@@ -29,6 +29,7 @@ if (!$result) {
 }
 $row = @mysql_fetch_assoc($result);
 $store_choice = $row['name'];
+$address = $row['address'];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,8 +51,8 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 ?>
 	<div data-role="content">
         <div data-role="fieldcontain">
-		<?php echo $_POST["store"]; ?>
-		<?php echo $store_choice; ?>
+		Congratulations!  You have chosen to purchase your items at <?php echo $store_choice; ?>, which is located at <br><br>
+		<?php echo $address; ?><br>
         </div>
 	</div> 
 </div> 
