@@ -21,17 +21,16 @@ if (!$db_selected) {
 }
 
 $store = $_POST["store"];
-echo $store;
 
-$query = sprintf("SELECT name FROM addresses WHERE name = $store;");
+$query = sprintf("SELECT name FROM addresses WHERE id = $store;");
 $result = mysql_query($query);
 if (!$result) {
   die('Invalid query: ' . mysql_error());
 }
 $row = @mysql_fetch_assoc($result);
-echo "$row\n";
 $store_choice = $row['name'];
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -52,6 +51,7 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 	<div data-role="content">
         <div data-role="fieldcontain">
 		<?php echo $_POST["store"]; ?>
+		<?php echo $store_choice; ?>
         </div>
 	</div> 
 </div> 
