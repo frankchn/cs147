@@ -52,9 +52,9 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 	<div data-role="content">
         <div data-role="fieldcontain">
 		Congratulations!  You have chosen to purchase your items at <br><br>
-		<?php echo $store_choice; ?>, <br><br>
+		<b><?php echo $store_choice; ?></b>, <br><br>
 		which is located at <br><br>
-		<?php echo $address; ?><br>
+		<b><?php echo $address; ?></b><br>
         </div>
 	</div> 
 </div> 
