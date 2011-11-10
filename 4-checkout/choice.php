@@ -27,6 +27,7 @@ if (!$result) {
   die('Invalid query: ' . mysql_error());
 }
 $row = @mysql_fetch_assoc($result);
+echo "$row\n";
 $store_choice = $row['name'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
