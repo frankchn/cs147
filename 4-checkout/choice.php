@@ -22,7 +22,7 @@ if (!$db_selected) {
 
 $store = $_POST["store"];
 
-$query = sprintf("SELECT name FROM addresses WHERE id = $store;");
+$query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
 $result = mysql_query($query);
 if (!$result) {
   die('Invalid query: ' . mysql_error());
@@ -51,7 +51,9 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 ?>
 	<div data-role="content">
         <div data-role="fieldcontain">
-		Congratulations!  You have chosen to purchase your items at <?php echo $store_choice; ?>, which is located at <br><br>
+		Congratulations!  You have chosen to purchase your items at <br><br>
+		<?php echo $store_choice; ?>, <br><br>
+		which is located at <br><br>
 		<?php echo $address; ?><br>
         </div>
 	</div> 
