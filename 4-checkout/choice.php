@@ -21,7 +21,7 @@ if (!$db_selected) {
 }
 
 $store = $_POST["store"];
-echo "$store";
+echo $store;
 
 $query = sprintf("SELECT name FROM addresses WHERE name = $store;");
 $result = mysql_query($query);
