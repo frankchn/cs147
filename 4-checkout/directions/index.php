@@ -1,10 +1,10 @@
 
 <?php
 
-$ROOT_PREFIX = '../';
+$ROOT_PREFIX = '../../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
-require("dbinfo.php");
+require("../dbinfo.php");
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
         die('<script>window.location = "../canvas/index.php";</script>');
