@@ -1,0 +1,74 @@
+html, body {
+  background: #0022b4;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+
+#pagewrap {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  
+  background: white;
+  
+  overflow: auto;
+  
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+  width: 900px;
+}
+
+  .title {
+    text-align: center;
+  }
+  
+  #pagewrap>div {
+    float: left;
+    width: 49%;
+  }
+  
+/* Map View */
+        
+        #map_canvas { height: 450px; border: solid thin black; }
+        
+        
+/* Directions */
+        #directions {
+          float: none;
+          width: 100% !important;
+        }
+  
+  
+/* Addresses */
+        
+        #addresses { color: white; }
+        
+            .address-panel {
+              -moz-border-radius: 10px;
+              -webkit-border-radius: 10px;
+              
+              background-color: #e8000d;
+              
+              overflow: auto;
+              
+              margin: 0 auto;
+              margin-bottom: 10px;
+              padding: 10px;
+              width: 90%;
+            }
+                .address-panel>form>div {
+                  margin-bottom: 10px;
+                }
+            
+                  .address-form-column {
+                    float: left;
+                  }
+                
+                    .address-panel label {
+                      display: block;
+                    }
+                    .address-panel input, .address-panel select { margin-left: 5px; }
+                      .address-panel #street { width: 95%; }
+                      .address-panel #state { width: 60%; }
+                      .address-panel .button { text-align: right; padding-top: 15px; clear: both; }
