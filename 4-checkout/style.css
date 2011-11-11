@@ -6,7 +6,8 @@ html, body {
 }
 
 #map_canvas {
-  height: 100%;
+  width: 290px;
+  height: 300px;
 }
 
 @media print {
@@ -15,6 +16,6 @@ html, body {
   }
 
   #map_canvas {
-    height: 650px;
+    height: 300px;
   }
 }
