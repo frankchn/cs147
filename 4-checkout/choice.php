@@ -144,7 +144,7 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
       </select>
       <strong>End:</strong>
       <select id="end" onchange="calcRoute();">
-        <option value="<?php echo $address; ?><?php echo $store_choice; ?></option>
+        <option value="<?php echo $address; ?>"><?php echo $store_choice; ?></option>
       </select>
     </div>
     <div id="directions-panel"></div>
