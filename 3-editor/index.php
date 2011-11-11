@@ -20,6 +20,7 @@ if(!isset($session_info['config_info']['room_config']) ||
     $objects[$i]['graphic'] = unserialize($obj['graphic']);
     $objects[$i]['position'] = unserialize($obj['position']);
     $objects[$i]['size'] = unserialize($obj['size']);
+    $objects[$i]['price'] = ($obj['price']);
     
     $i++;
   }
@@ -61,6 +62,10 @@ var mouseIsDown = 0;
 var selectMoveIndex = -1;
 var waitingForSecond = -1;
 var selectIndex = -1;
+
+var oldIndex = -1;
+var oldX = -1;
+var oldY = -1;
 
 var loadedImages = 0;
 var loadedImgObjs = [];
@@ -200,6 +205,10 @@ function touchDown(e) {
 	return;
       }
 
+      oldIndex = selectMoveIndex;
+      oldX = canX;
+      oldY = canY;
+
       objects[newselectMoveIndex]['selected'] = true;	
       selectIndex = newselectMoveIndex;
       
@@ -287,6 +296,19 @@ function saveConfigurationAndCheckOut() {
 	});
 }
 
+function deleteSelectedObject() {
+  if(selectMoveIndex > -1) {
+    window.location = 'delete.php?k=' + selectMoveIndex;
+  }
+}
+
+function undoConfiguration() {
+  if(oldIndex > -1) {
+    objects[oldIndex]['position']['x'] = oldX;
+    objects[oldIndex]['position']['y'] = oldY;
+    drawObjects();
+  }
+}
 
 $(document).ready(function () {
   loadImages();
@@ -299,13 +321,22 @@ $(document).ready(function () {
 
 <body>
 <div data-role="page"  data-theme="e">  
-<canvas id="can" width="318" height="370" style="border:1px solid white">
+<canvas id="can" width="318" height="375" style="border:1px solid white">
 
 </canvas>
 <div data-role="footer" class="ui-bar"  data-theme="e">
-  <a data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
+  <div class="ui-grid-d">
+    <a class="ui-block-a" data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
+    <a class="ui-block-b" href="add.php"><img border="0" src="../images/add.png" /></a>
+    
+    <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img src="../images/trash.png" /></a>
+    <a class="ui-block-d" href="javascript:undoConfiguration()"><img border="0" src="../images/undo.png" /></a>
+    
+    <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();"><img border="0" src="../images/checkout.png" /></a>
+  </div>
+  <!--- a data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
   <a href="add.php"  data-ajax="false" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
-  <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a>
+  <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a ---->
 </div>
 
 <div style="display:none">

@@ -5,6 +5,7 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
+        $session_info['config_info']['room_config'] = array();
 	$session_info['config_info']['style_id'] = (int)$_POST['style'];
 	update_config_info();
 	header("Location: ../home.php");

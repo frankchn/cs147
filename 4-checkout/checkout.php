@@ -26,7 +26,7 @@ $objects = object_to_array($session_info['config_info']['room_config']);
 <body>
 <div data-role="page" data-theme="e">  
 <?php 
-generate_header('Checkout', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>', 
+generate_header('Checkout', '<a data-ajax="false" data-transition="slideup" href="../home.php" data-icon="arrow-l">Cancel</a>', 
  '<a data-ajax="false" data-transition="slideup" href="#" data-icon="arrow-r">Buy</a>'); 
 ?>
 	<div data-role="content">

@@ -1,3 +1,4 @@
 .DS_store
 *~
 /inc/config.inc.php
+*.swp
