@@ -20,7 +20,7 @@ if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }
 
-$store = $_GET['store'];
+$store = $_GET['store_id'];
 
 $query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
 $result = mysql_query($query);

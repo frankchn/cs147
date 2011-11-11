@@ -58,8 +58,8 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 		Congratulations!  You have chosen to purchase your items at <br><br>
 		<b><?php echo $store_choice; ?></b><br><br>
 		which is located at <br><br>
-		<b><?php echo $address; ?></b><br>
-	<a href="directions.php?store=<?php echo $store; ?>">See directions!</a></br>
+		<b><?php echo $address; ?></b><br><br>
+	<a href="directions.php?store_id=<?php echo $store; ?>">See directions!</a></br>
 
         </div>
 </div>
