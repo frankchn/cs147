@@ -121,6 +121,9 @@ $address = $row['address'];
     </script>
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
+<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
 
   </head>
   <body>
