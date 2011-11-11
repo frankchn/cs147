@@ -41,8 +41,8 @@ $address = $row['address'];
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.css" />
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
-<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 
+<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -121,8 +121,6 @@ $address = $row['address'];
 
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-
-
 </head>
 
 <body>
@@ -137,6 +135,7 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 		which is located at <br><br>
 		<b><?php echo $address; ?></b><br>
         </div>
+</div>
 <div id="control">
       <strong>Start:</strong>
       <select id="start" onchange="calcRoute();">
@@ -149,7 +148,6 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
     </div>
     <div id="directions-panel"></div>
     <div id="map_canvas"></div>
-	</div> 
 </div> 
 </body>
 </html>
