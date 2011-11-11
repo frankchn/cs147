@@ -1,8 +1,11 @@
+
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
+    <title>Google Maps JavaScript API v3 Example: Directions Complex</title>
     <link href="style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       #directions-panel {
@@ -38,21 +41,21 @@
         }
       }
     </style>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
       var directionDisplay;
       var directionsService = new google.maps.DirectionsService();
 
       function initialize() {
         directionsDisplay = new google.maps.DirectionsRenderer();
-	var map;
         var myOptions = {
           zoom: 7,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: new google.maps.LatLng(41.850033, -87.6500523)
         };
-        map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
-
+        var map = new google.maps.Map(document.getElementById('map_canvas'),
+            myOptions);
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
@@ -62,8 +65,7 @@
       }
 
       function calcRoute() {
-        //var start = document.getElementById('start').value;
-	var start = 'Stanford, CA';
+        var start = document.getElementById('start').value;
         var end = document.getElementById('end').value;
         var request = {
           origin: start,
@@ -84,11 +86,33 @@
     <div id="control">
       <strong>Start:</strong>
       <select id="start" onchange="calcRoute();">
-        <option value="Stanford, CA">Stanford</option>
+        <option value="chicago, il">Chicago</option>
+        <option value="st louis, mo">St Louis</option>
+        <option value="joplin, mo">Joplin, MO</option>
+        <option value="oklahoma city, ok">Oklahoma City</option>
+        <option value="amarillo, tx">Amarillo</option>
+        <option value="gallup, nm">Gallup, NM</option>
+        <option value="flagstaff, az">Flagstaff, AZ</option>
+        <option value="winona, az">Winona</option>
+        <option value="kingman, az">Kingman</option>
+        <option value="barstow, ca">Barstow</option>
+        <option value="san bernardino, ca">San Bernardino</option>
+        <option value="los angeles, ca">Los Angeles</option>
       </select>
       <strong>End:</strong>
       <select id="end" onchange="calcRoute();">
-        <option value="<?php echo $address; ?><?php echo $store_choice; ?></option>
+        <option value="chicago, il">Chicago</option>
+        <option value="st louis, mo">St Louis</option>
+        <option value="joplin, mo">Joplin, MO</option>
+        <option value="oklahoma city, ok">Oklahoma City</option>
+        <option value="amarillo, tx">Amarillo</option>
+        <option value="gallup, nm">Gallup, NM</option>
+        <option value="flagstaff, az">Flagstaff, AZ</option>
+        <option value="winona, az">Winona</option>
+        <option value="kingman, az">Kingman</option>
+        <option value="barstow, ca">Barstow</option>
+        <option value="san bernardino, ca">San Bernardino</option>
+        <option value="los angeles, ca">Los Angeles</option>
       </select>
     </div>
     <div id="directions-panel"></div>
