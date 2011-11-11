@@ -1,35 +1,3 @@
-<?php
-require("../dbinfo.php");
-
-if(isset($_GET['store']) && $_GET['store'] == 1) {
-        die('<script>window.location = "../canvas/index.php";</script>');
-}
-// Opens a connection to a MySQL server
-$connection=mysql_connect ('localhost', $username, $password);
-if (!$connection) {
-  die('Not connected : ' . mysql_error());
-}
-
-// Set the active MySQL database
-$db_selected = mysql_select_db($database, $connection);
-if (!$db_selected) {
-  die ('Can\'t use db : ' . mysql_error());
-}
-
-$store = $_POST["store"];
-
-$query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
-$result = mysql_query($query);
-if (!$result) {
-  die('Invalid query: ' . mysql_error());
-}
-$row = @mysql_fetch_assoc($result);
-$store_choice = $row['name'];
-$address = $row['address'];
-?>
-
-?>
-
 <!DOCTYPE html>
 <html>
   <head>
