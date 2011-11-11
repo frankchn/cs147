@@ -129,6 +129,7 @@ $address = $row['address'];
       </select>
       <strong>End:</strong>
       <select id="end" onchange="calcRoute();">
+	<option value="Stanford, CA">Select</option>
         <option value="<?php echo $address; ?>"><?php echo $store_choice; ?></option>
       </select>
     </div>
