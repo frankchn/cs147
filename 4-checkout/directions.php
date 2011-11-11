@@ -39,7 +39,7 @@ $address = $row['address'];
     <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <title>Google Maps JavaScript API v3 Example: Directions Complex</title>
+    <title>DormDecor - Store Directions</title>
 
     <link href="style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
@@ -100,7 +100,7 @@ $address = $row['address'];
       }
 
       function calcRoute() {
-        var start = document.getElementById('start').value;
+        var start = 'Stanford, CA';
         var end = document.getElementById('end').value;
         var request = {
           origin: start,
