@@ -30,7 +30,7 @@ if (!$db_selected) {
 }
 
 // Select all the rows in the markers table
-$query = sprintf("SELECT address, name, lat, lng, ( 3959 * acos( cos( radians('%s') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('%s') ) + sin( radians('%s') ) * sin( radians( lat ) ) ) ) AS distance FROM addresses HAVING distance < '%s' ORDER BY distance LIMIT 0 , 20",
+$query = sprintf("SELECT id, address, name, lat, lng, ( 3959 * acos( cos( radians('%s') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('%s') ) + sin( radians('%s') ) * sin( radians( lat ) ) ) ) AS distance FROM addresses HAVING distance < '%s' ORDER BY distance LIMIT 0 , 20",
   mysql_real_escape_string($center_lat),
   mysql_real_escape_string($center_lng),
   mysql_real_escape_string($center_lat),
@@ -51,6 +51,7 @@ while ($row = @mysql_fetch_assoc($result)){
   echo 'lat="' . $row['lat'] . '" ';
   echo 'lng="' . $row['lng'] . '" ';
   echo 'distance="' . $row['distance'] . '" ';
+  echo 'internalid="'. $row['id'] , '" ';
   echo "/>\n";
 }
 

@@ -3,21 +3,10 @@
 $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
-require("dbinfo.php");
+//require("dbinfo.php");
 
 if(isset($_GET['store']) && $_GET['store'] == 1) {
         die('<script>window.location = "../canvas/index.php";</script>');
-}
-// Opens a connection to a MySQL server
-$connection=mysql_connect ('localhost', $username, $password);
-if (!$connection) {
-  die('Not connected : ' . mysql_error());
-}
-
-// Set the active MySQL database
-$db_selected = mysql_select_db($database, $connection);
-if (!$db_selected) {
-  die ('Can\'t use db : ' . mysql_error());
 }
 
 $store = $_GET['store_id'];
@@ -38,7 +27,9 @@ $address = $row['address'];
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
     <title>DormDecor - Store Directions</title>
 
     <link href="style.css" rel="stylesheet" type="text/css">
@@ -97,11 +88,13 @@ $address = $row['address'];
         var control = document.getElementById('control');
         control.style.display = 'block';
         map.controls[google.maps.ControlPosition.TOP].push(control);
+
+      calcRoute();
       }
 
       function calcRoute() {
         var start = 'Stanford, CA';
-        var end = document.getElementById('end').value;
+        var end = '<?php echo $address; ?>';
         var request = {
           origin: start,
           destination: end,
@@ -118,24 +111,19 @@ $address = $row['address'];
 
 
 
+
     </script>
 
   </head>
   <body>
-<div id="control">
-      <strong>Start:</strong>
-      <select id="start" onchange="calcRoute();">
-        <option value="Stanford, CA">Stanford</option>
-      </select>
-      <strong>End:</strong>
-      <select id="end" onchange="calcRoute();">
-	<option value="Stanford, CA">Select</option>
-        <option value="<?php echo $address; ?>"><?php echo $store_choice; ?></option>
-      </select>
+<?php 
+generate_header('Directions', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
+?>
+    <div id="control">
+
     </div>
-    <div id="directions-panel"></div>
+    <div id="directions-panel" style="width:300px"></div>
     <div id="map_canvas"></div>
-</div>
 </body>
 </html>
 

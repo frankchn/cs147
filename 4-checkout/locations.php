@@ -92,7 +92,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
               parseFloat(markerNodes[i].getAttribute("lat")),
               parseFloat(markerNodes[i].getAttribute("lng")));
 
-         createOption(name, distance, i);
+         createOption(name, distance, parseInt(markerNodes[i].getAttribute("internalid")));
          createMarker(latlng, name, address);
          bounds.extend(latlng);
        }

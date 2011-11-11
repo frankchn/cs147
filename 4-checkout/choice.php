@@ -3,21 +3,10 @@
 $ROOT_PREFIX = '../';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
-require("dbinfo.php");
+//require("dbinfo.php");
 
-if(isset($_GET['store']) && $_GET['store'] == 1) {
-	die('<script>window.location = "../canvas/index.php";</script>');	
-}
-// Opens a connection to a MySQL server
-$connection=mysql_connect ('localhost', $username, $password);
-if (!$connection) {
-  die('Not connected : ' . mysql_error());
-}
-
-// Set the active MySQL database
-$db_selected = mysql_select_db($database, $connection);
-if (!$db_selected) {
-  die ('Can\'t use db : ' . mysql_error());
+if(!isset($_POST['store'])) {
+  die("Sorry, please select a store first.");
 }
 
 $store = $_POST["store"];
@@ -59,7 +48,7 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 		<b><?php echo $store_choice; ?></b><br><br>
 		which is located at <br><br>
 		<b><?php echo $address; ?></b><br><br>
-	<a href="directions.php?store_id=<?php echo $store; ?>">See directions!</a></br>
+	<a href="directions.php?store_id=<?php echo $store; ?>" data-ajax="false">See directions!</a></br>
 
         </div>
 </div>
