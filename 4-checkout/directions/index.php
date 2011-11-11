@@ -53,7 +53,15 @@
         };
         map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 
-     function calcRoute() {
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
+        var control = document.getElementById('control');
+        control.style.display = 'block';
+        map.controls[google.maps.ControlPosition.TOP].push(control);
+      }
+
+      function calcRoute() {
         var start = document.getElementById('start').value;
         var end = document.getElementById('end').value;
         var request = {
