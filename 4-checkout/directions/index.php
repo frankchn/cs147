@@ -1,13 +1,9 @@
-
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
-    <title>Google Maps JavaScript API v3 Example: Directions Complex</title>
-    <link href="/apis/maps/documentation/javascript/examples/default.css"
-       rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       #directions-panel {
         height: 100%;
