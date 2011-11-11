@@ -21,7 +21,7 @@ if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }
 
-$store = 'Target';
+$store = 3;
 
 $query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
 $result = mysql_query($query);
