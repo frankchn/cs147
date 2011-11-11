@@ -44,7 +44,6 @@ $address = $row['address'];
 
 <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport"/>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="UTF-8">
     <link href="style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       #directions-panel {
@@ -124,6 +123,18 @@ $address = $row['address'];
 </head>
 
 <body>
+<div data-role="page" data-theme="e">  
+<?php 
+generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
+?>
+	<div data-role="content">
+        <div data-role="fieldcontain">
+		Congratulations!  You have chosen to purchase your items at <br><br>
+		<b><?php echo $store_choice; ?></b><br><br>
+		which is located at <br><br>
+		<b><?php echo $address; ?></b><br>
+        </div>
+	</div>
 <div id="control">
       <strong>Start:</strong>
       <select id="start" onchange="calcRoute();">
