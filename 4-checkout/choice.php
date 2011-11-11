@@ -59,7 +59,7 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 		<b><?php echo $store_choice; ?></b><br><br>
 		which is located at <br><br>
 		<b><?php echo $address; ?></b><br>
-	<a href="directions.php?store=<?php echo $store_choice; ?>">See directions!</a></br>
+	<a href="directions.php?store=<?php echo $store; ?>">See directions!</a></br>
 
         </div>
 </div>
