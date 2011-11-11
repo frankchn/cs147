@@ -10,7 +10,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 
   update_config_info();
 
-  header("Location: ../home.php");
+  header("Location: modify.php");
   die();
 }
 
@@ -28,10 +28,10 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 </head>
 
 <body>
-<div data-role="page" data-theme="e">  
+<div data-role="page" id="pick-page" data-theme="e">  
 <?php 
 generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cancel</a>',
-		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="check">Save</a>'); 
+		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="arrow-r">Next</a>'); 
 ?>
     <div data-role="content">
       <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
@@ -75,8 +75,10 @@ function gorefresh() {
   window.location = 'pick.php?d=' + dorm_id;
 }
 
-$('#dorm-select').change(function(e) {
-  gorefresh();
+$('#pick-page').bind('pageshow', function() {
+  $('#dorm-select').change(function(e) {
+    gorefresh();
+  });
 });
 
 </script>

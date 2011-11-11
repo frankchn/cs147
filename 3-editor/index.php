@@ -7,7 +7,9 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 $i = -1;
 $objects = array();
 
-if(!isset($session_info['config_info']['room_config'])) {
+if(!isset($session_info['config_info']['room_config']) ||
+   !is_array($session_info['config_info']['room_config']) ||
+    count($session_info['config_info']['room_config']) == 0) {
   $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
   $objects = array();
   $i = 0;
@@ -100,8 +102,17 @@ function gestureXY(e) {
 function gestureEnd(e) {
   e.preventDefault();	
   
-  if(e.rotation > 50 || e.rotation < -50) {
-    objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + 1) % 2;
+  var sz = objects[selectMoveIndex]['graphic'].length;
+
+  if(e.rotation > 50) {
+    objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + 1) % sz;
+    var tmp = objects[selectMoveIndex]['size']['width'];
+    objects[selectMoveIndex]['size']['width'] =  objects[selectMoveIndex]['size']['height'];
+    objects[selectMoveIndex]['size']['height'] = tmp;
+  }
+
+  if(e.rotation < -50) {
+    objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + sz - 1) % sz;
     var tmp = objects[selectMoveIndex]['size']['width'];
     objects[selectMoveIndex]['size']['width'] =  objects[selectMoveIndex]['size']['height'];
     objects[selectMoveIndex]['size']['height'] = tmp;
