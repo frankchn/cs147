@@ -1,4 +1,3 @@
-
 <?php
 
 $ROOT_PREFIX = '../../';
@@ -38,7 +37,10 @@ $address = $row['address'];
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <title>Google Maps JavaScript API v3 Example: Directions Complex</title>
+
     <link href="style.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       #directions-panel {
