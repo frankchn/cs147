@@ -13,12 +13,12 @@
 <body>
 <div data-role="page" data-theme="e">
   <div data-role="header" data-theme="d">
-    <h1>Hello!</h1>
+    <h1>Decorating Your Room</h1>
   </div>
 
   <div data-role="content" data-theme="c">
-    <h1>Delete page?</h1>
-    <p>This is a regular page, styled as a dialog. To create a dialog, just link to a normal page and include a transition and <code>data-rel="dialog"</code> attribute.</p>
+    <h1>Instructions</h1>
+    <p>You can click on objects to select them and drag them around, click on '+' to add new objects, use gestures or the rotation button to rotate objects and the shopping cart icon to checkout. Happy decorating!</p>
     <a href="index.php" data-role="button" data-ajax="false" data-theme="b">Sounds good</a>       
   </div>
 </div>

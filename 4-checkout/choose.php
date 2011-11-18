@@ -27,7 +27,7 @@ $objects = object_to_array($session_info['config_info']['room_config']);
 <body>
 <div data-role="page" data-theme="e">  
 <?php 
-generate_header('Buy', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
+generate_header('Buy', '<a data-ajax="false" data-transition="slideup" href="../3-editor/index.php" data-icon="arrow-l">Cancel</a>'); 
 ?>
 	<div data-role="content">
 	  <ul data-role="listview">
@@ -42,7 +42,6 @@ generate_header('Buy', '<a data-ajax="false" data-transition="slideup" href="jav
 	  ?>
 	  </ul>
         <div data-role="fieldcontain">
-        	<button onClick="window.location='checkout.php'" data-theme="b">Buy Items Online</button>
         	<button onClick="window.location='locations.php'" data-theme="b">View Store Locations</button>
         </div>
 	</div> 

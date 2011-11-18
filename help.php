@@ -1,6 +1,6 @@
 <?php
 
-$ROOT_PREFIX = '../';
+$ROOT_PREFIX = '';
 require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 
@@ -23,20 +23,16 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 
 <body>
 <div data-role="page">  
-    <div data-role="header"> 
-        <h1>Help</h1> 
-    </div> 
+<?php 
+generate_header('Help', '<a href="home.php" data-icon="delete">Back</a>', ''); 
+?> 
 	<div data-role="content">
-    <ul data-role="listview" data-theme="g">
-		Confused? Here's what you need to know:
+	<p>Confused? Here's what you need to know:</p>
         
         <p>In the Decorate Your Room page, tap and drag items to move them around. Double-tap items to modify them, hit add to add items (not implemented yet), and hit checkout to find these items online.</p>
         
-       <p> In the Pick a Style page, pick a theme with which to jazz up your dorm. This will help you find items that fit with your theme.</p>
-        
         <p>On the Checkout page, decide whether you want to find these items online or find them in-stores.</p>
         
-	</ul>
         
 	</div> 
 </div> 

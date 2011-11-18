@@ -16,8 +16,17 @@ if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
   // we also check here and update the school - now we just assume stanford
   $school_id = 1;
   mysql_query('UPDATE `sessions` SET `geolocation` = \''.serialize($loc).'\', `school_id` = '.$school_id.' WHERE `id` = '.$session_info['id']);
-
 }
+
+mysql_query('UPDATE `sessions` SET `school_id` = '.$school_id.' WHERE `id` = '.$session_info['id']);
+$session_info['school_id'] = 1;
+
+update_config_info();
+
+header("Location: 1-dormroom/pick.php");
+
+die();
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -38,11 +47,11 @@ if(isset($_GET['longitude']) || isset($_GET['latitude'])) {
     <div data-role="content" data-theme="e">
       <ul data-role="listview" data-theme="e">
 	  <li><a href="1-dormroom/pick.php">Dorm Room</a></li>
-	  <?php if(isset($session_info['config_info']['dorm_id']) && isset($session_info['config_info']['style_id'])) { ?>
+	  <?php if(isset($session_info['config_info']['dorm_id'])) { ?>
 	  <li><a data-ajax="false" href="3-editor/index.php">Decorate</a></li>        
 	  <li><a href="4-checkout/choose.php">Checkout</a></li>
 	  <?php } ?>
-	  <li><a href="help.php">Help</a></li>
+	  <li><a data-ajax="false" href="help.php">Help</a></li>
       </ul>
     </div> 
 </div> 

@@ -354,7 +354,7 @@ $(document).ready(function () {
 
 <div data-role="header" class="ui-bar"  data-theme="e">
   <div class="ui-grid-d">
-    <a class="ui-block-a" data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
+    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l"><img border="0" src="../images/arrow.png" /></a>
     <a class="ui-block-b" href="add.php"><img border="0" src="../images/add.png" /></a>
     
     <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img src="../images/trash.png" /></a>

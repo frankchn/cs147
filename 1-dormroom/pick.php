@@ -10,9 +10,10 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 
   update_config_info();
 
-  header("Location: modify.php");
+  header("Location: ../3-editor/index.php");
   die();
 }
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -30,7 +31,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <body>
 <div data-role="page" id="pick-page" data-theme="e">  
 <?php 
-generate_header('Dorm Location', '<a href="../home.php" data-icon="delete">Cancel</a>',
+generate_header('Dorm Location', '',
 		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="arrow-r">Next</a>'); 
 ?>
     <div data-role="content">
