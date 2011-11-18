@@ -52,28 +52,23 @@ generate_header('Add Object', '<a data-ajax="false" data-transition="slideup" hr
     <div data-role="content" data-theme="e">
 	<ul data-role="listview">
 	    <?php
+	      $s = "";
 	      $c = 0;
-	      $r = mysql_query('SELECT * FROM `objects` WHERE `style_id` = '.$session_info['config_info']['style_id']);
+	      $r = mysql_query('SELECT * FROM `objects` ORDER BY `style_id` ASC');
 	      while($o = mysql_fetch_assoc($r)) {
 		$already_in = false;
-		foreach($session_info['config_info']['room_config'] as $v) {
-		  if($v['id'] == $o['id']) $already_in = true;
+		$v = mysql_fetch_assoc(mysql_query('SELECT * FROM `styles` WHERE `id` = '.$o['style_id']));
+	        $current_type = $v['name'];
+		if($current_type != $s) {
+		    printf("<li data-role='list-divider'>%s</li>", $current_type);
+		    $s = $current_type;
 		}
-		if(!$already_in) {
-		  $c++;
 	    ?>
 	    <li><a data-ajax="false" href="add.php?id=<?php echo $o['id']; ?>">
 		    <img src="<?php echo $o['thumbnail'] ?>" />
 		    <h3><?php echo $o['name']; ?></h3>
 		    <p><?php echo $o['short_desc']; ?></p>
 	    </a></li>
-	    <?php
-		}
-	      }
-
-	      if($c == 0) {
-	    ?>
-	      <li>Sorry, there are no items available.</li>
 	    <?php
 	      }
 	    ?>
