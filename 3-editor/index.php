@@ -12,7 +12,7 @@ $display_first = false;
 if(!isset($session_info['config_info']['room_config']) ||
    !is_array($session_info['config_info']['room_config']) ||
     count($session_info['config_info']['room_config']) == 0) { 
-  $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
+  $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = 1 AND `incl_default` = 1");
   $objects = array();
   $i = 0;
   while($obj = mysql_fetch_assoc($obj_r)) {
@@ -223,14 +223,14 @@ function touchDown(e) {
       selectIndex = newselectMoveIndex;
       
       if(waitingForSecond == -1) {
-	      waitingForSecond = newselectMoveIndex;
-	      setTimeout('clearSecond()', 400);
+	waitingForSecond = newselectMoveIndex;
+	setTimeout('clearSecond()', 400);
       } else if(waitingForSecond == newselectMoveIndex) {
-	      $('#manipulate_object').attr('href', 'manipulate-object.php?k=' + newselectMoveIndex);
-	      $('#manipulate_object').click();
-	      clearSecond();	
+	$('#manipulate_object').attr('href', 'manipulate-object.php?k=' + newselectMoveIndex);
+	$('#manipulate_object').click();
+	clearSecond();	
       } else {
-	      clearSecond();	
+	clearSecond();	
       }
       
       selectMoveIndex = newselectMoveIndex;
