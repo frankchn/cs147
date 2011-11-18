@@ -7,9 +7,11 @@ require($ROOT_PREFIX.'inc/function.inc.php');
 $i = -1;
 $objects = array();
 
-if(!isset($session_info['config_info']['room_config']) ||
+$display_first = false;
+
+/*if(!isset($session_info['config_info']['room_config']) ||
    !is_array($session_info['config_info']['room_config']) ||
-    count($session_info['config_info']['room_config']) == 0) {
+    count($session_info['config_info']['room_config']) == 0) { */
   $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
   $objects = array();
   $i = 0;
@@ -32,10 +34,13 @@ if(!isset($session_info['config_info']['room_config']) ||
   }
 
   $session_info['config_info']['room_config'] = $objects;
+  $display_first = true;
+
   update_config_info();
-} else {
+/*} else {
   $objects = object_to_array($session_info['config_info']['room_config']);
-}
+  $display_first = true;
+}*/
 
 for($i = 0; $i < count($objects); $i++) {
   $objects[$i]['selected'] = false;
@@ -71,6 +76,8 @@ var loadedImages = 0;
 var loadedImgObjs = [];
 var objects = <?php echo json_encode($objects); ?>;
 
+var doorObject;
+
 var rotated_this_round = false;
 
 function init() {
@@ -86,14 +93,11 @@ function init() {
     can.addEventListener("gestureend", gestureEnd, false); 
 
     document.body.addEventListener("touchcancel", touchUp, false);
-	
     loadImages();
 }
 
 function gestureStart(e) {
-    e.preventDefault();	
-
-
+  e.preventDefault();
   rotated_this_round = false;
 }
 
@@ -127,6 +131,9 @@ function gestureEnd(e) {
 }
 
 function loadImages() {
+	doorObject = new Image();
+	doorObject.src = "../assets/door.png";
+
 	for(i = 0; i < objects.length; i++) {
 		loadedImgObjs[i] = new Array();
 		for(j = 0; j < objects[i]['graphic'].length; j++) {
@@ -138,11 +145,14 @@ function loadImages() {
 			loadedImgObjs[i][j].src = objects[i]['graphic'][j];
 		}
 	}
+
 }
 
 function drawObjects() {
 	ctx.clearRect(0,0, can.width,can.height);
 	
+	ctx.drawImage(doorObject, 115, 280, 90, 100);
+
 	for(i = 0; i < objects.length; i++) {
 		obj_w = objects[i]['size']['width'];
 		obj_h = objects[i]['size']['height'];
@@ -302,6 +312,19 @@ function deleteSelectedObject() {
   }
 }
 
+function rotateObject() {
+  if(selectMoveIndex != -1) {
+    var sz = objects[selectMoveIndex]['graphic'].length;
+
+    objects[selectMoveIndex]['rotation'] = (objects[selectMoveIndex]['rotation'] + 1) % sz;
+    var tmp = objects[selectMoveIndex]['size']['width'];
+    objects[selectMoveIndex]['size']['width'] =  objects[selectMoveIndex]['size']['height'];
+    objects[selectMoveIndex]['size']['height'] = tmp;
+
+    $.post('save.php', { objects: JSON.stringify(objects) }, function(data) { });    
+  }
+}
+
 function undoConfiguration() {
   if(oldIndex > -1) {
     objects[oldIndex]['position']['x'] = oldX;
@@ -314,6 +337,13 @@ $(document).ready(function () {
   loadImages();
   init();
   setInterval('drawObjects();', 300);
+  <?php
+   if($display_first) {
+  ?>
+    $('#process').click();
+  <?php
+    }
+  ?>
 });
 
 </script>
@@ -321,26 +351,30 @@ $(document).ready(function () {
 
 <body>
 <div data-role="page"  data-theme="e">  
-<canvas id="can" width="318" height="375" style="border:1px solid white">
 
-</canvas>
-<div data-role="footer" class="ui-bar"  data-theme="e">
+<div data-role="header" class="ui-bar"  data-theme="e">
   <div class="ui-grid-d">
     <a class="ui-block-a" data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
     <a class="ui-block-b" href="add.php"><img border="0" src="../images/add.png" /></a>
     
     <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img src="../images/trash.png" /></a>
-    <a class="ui-block-d" href="javascript:undoConfiguration()"><img border="0" src="../images/undo.png" /></a>
+    <a class="ui-block-d" href="javascript:rotateObject()"><img border="0" src="../images/undo.png" /></a>
     
     <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();"><img border="0" src="../images/checkout.png" /></a>
   </div>
-  <!--- a data-transition="slideup" href="../home.php" data-icon="arrow-l">Back</a>
-  <a href="add.php"  data-ajax="false" data-role="button" data-transition="slidedown" data-icon="plus">Add</a>
-  <a href="javascript:saveConfigurationAndCheckOut();" data-role="button" data-transition="slidedown" data-icon="arrow-r">Checkout</a ---->
+</div>
+
+<canvas id="can" width="318" height="375" style="border:1px solid white">
+
+</canvas>
+
+
+<div style="display:none">
+    <a href="manipulate-object.php" id="manipulate_object" data-transition="slidedown" data-rel="dialog">Hidden Dialog</a>
 </div>
 
 <div style="display:none">
-	<a href="manipulate-object.php" id="manipulate_object" data-transition="slidedown" data-rel="dialog">Hidden Dialog</a>
+    <a href="help.php" id="process" data-transition="slidedown" data-rel="dialog">Help</a>
 </div>
 
 </div> 

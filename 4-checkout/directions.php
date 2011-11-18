@@ -123,7 +123,7 @@ generate_header('Directions', '<a data-ajax="false" data-transition="slideup" hr
 
     </div>
     <div id="directions-panel" style="width:300px"></div>
-    <div id="map_canvas"></div>
+    <div id="map_canvas" style="width:300px"></div>
 </body>
 </html>
 
