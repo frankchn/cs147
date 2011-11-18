@@ -9,9 +9,9 @@ $objects = array();
 
 $display_first = false;
 
-/*if(!isset($session_info['config_info']['room_config']) ||
+if(!isset($session_info['config_info']['room_config']) ||
    !is_array($session_info['config_info']['room_config']) ||
-    count($session_info['config_info']['room_config']) == 0) { */
+    count($session_info['config_info']['room_config']) == 0) { 
   $obj_r = mysql_query("SELECT * FROM `objects` WHERE `style_id` = ".$session_info['config_info']['style_id'].' AND `incl_default` = 1');
   $objects = array();
   $i = 0;
@@ -37,10 +37,10 @@ $display_first = false;
   $display_first = true;
 
   update_config_info();
-/*} else {
+} else {
   $objects = object_to_array($session_info['config_info']['room_config']);
-  $display_first = true;
-}*/
+  //$display_first = true;
+} 
 
 for($i = 0; $i < count($objects); $i++) {
   $objects[$i]['selected'] = false;
