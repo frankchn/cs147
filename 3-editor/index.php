@@ -23,7 +23,7 @@ if(!isset($session_info['config_info']['room_config']) ||
     $objects[$i]['position'] = unserialize($obj['position']);
     $objects[$i]['size'] = unserialize($obj['size']);
     $objects[$i]['price'] = ($obj['price']);
-    
+    cd 
     $i++;
   }
 
@@ -333,6 +333,16 @@ function undoConfiguration() {
   }
 }
 
+function lightUp(int icon){
+	switch(icon){
+	case 0:
+		Document.getElementById("arrow").src="../images/rotate2.png";
+		alert("changed item");
+		setTimeout("Document.getElementById('arrow').src='../images/rotate.png'", 500);
+		break;
+	}
+}
+
 $(document).ready(function () {
   loadImages();
   init();
@@ -354,13 +364,13 @@ $(document).ready(function () {
 
 <div data-role="header" class="ui-bar"  data-theme="e">
   <div class="ui-grid-d">
-    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l"><img border="0" src="../images/arrow.png" /></a>
-    <a class="ui-block-b" href="add.php"><img border="0" src="../images/add.png" /></a>
+    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l"><img id="arrow" border="0" src="../images/arrow.png" onclick="lightUp(0)" /></a>
+    <a class="ui-block-b" href="add.php"><img id="add" border="0" src="../images/add.png" onclick="lightUp(1)" /></a>
     
-    <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img src="../images/trash.png" /></a>
-    <a class="ui-block-d" href="javascript:rotateObject()"><img border="0" src="../images/undo.png" /></a>
+    <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img id="trash" src="../images/trash.png" onclick="lightUp(2)" /></a>
+    <a class="ui-block-d" href="javascript:rotateObject()"><img id="rotate" border="0" src="../images/rotate.png" onclick="lightUp(3)" /></a>
     
-    <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();"><img border="0" src="../images/checkout.png" /></a>
+    <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();"><img id="checkout" border="0" src="../images/checkout.png" onclick="lightUp(4)" /></a>
   </div>
 </div>
 
