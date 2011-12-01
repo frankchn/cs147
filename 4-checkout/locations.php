@@ -11,7 +11,23 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 	die();	
 }
 
-?>
+$objects = object_to_array($session_info['config_info']['room_config']);
+$bed=0;
+$chair=0;
+$drawer=0;
+$desk=0;
+$plant=0;
+foreach($objects as $k => $v) {
+	$item = $v['name'];
+	if ($item == 'Bed') $bed=1;
+	else if ($item == 'Chair') $chair=1;
+	else if ($item == 'Drawer') $drawer=1;
+	else if ($item == 'Desk') $desk=1;
+	else if ($item == 'Plant') $plant=1;
+}
+
+?>	
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -79,7 +95,13 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
      clearLocations(); 
 
      var radius = document.getElementById('radiusSelect').value;
-     var searchUrl = 'genxml.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius;
+	var bed = "<?php echo $bed; ?>";
+	var chair = "<?php echo $chair; ?>";
+	var drawer = "<?php echo $drawer; ?>";
+	var desk = "<?php echo $desk; ?>";
+	var plant = "<?php echo $plant; ?>";
+     var searchUrl = 'genxml.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius + 
+	       		'&bed='+bed+'&chair='+chair+'&drawer='+drawer+'&desk='+desk+'&plant='+plant;
      downloadUrl(searchUrl, function(data) {
        var xml = parseXml(data);
        var markerNodes = xml.documentElement.getElementsByTagName("marker");
@@ -92,8 +114,14 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
               parseFloat(markerNodes[i].getAttribute("lat")),
               parseFloat(markerNodes[i].getAttribute("lng")));
 
+	 var bed = markerNodes[i].getAttribute("bed");
+	 var chair = markerNodes[i].getAttribute("chair");
+	 var drawer = markerNodes[i].getAttribute("drawer");
+	 var desk = markerNodes[i].getAttribute("desk");
+	 var plant = markerNodes[i].getAttribute("plant");
          createOption(name, distance, parseInt(markerNodes[i].getAttribute("internalid")));
-         createMarker(latlng, name, address);
+         //createMarker(latlng, name, address);
+         createMarker(latlng, name, address, bed, chair, drawer, desk, plant);
          bounds.extend(latlng);
        }
        map.fitBounds(bounds);
@@ -105,8 +133,31 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
       });
     }
 
-    function createMarker(latlng, name, address) {
+    function createMarker(latlng, name, address, bed, chair, drawer, desk, plant) {
       var html = "<b>" + name + "</b> <br/>" + address;
+      html += "<br/><br/><u>Items</u> <font size='-1'>(<b>bold</b> = item you are purchasing)<br/></font>";
+      if (bed == "y") {
+	if (<?php echo "$bed"; ?>) html += "<b>Beds</b> | ";
+	else html += "Beds | ";
+      }
+      if (chair == "y") {
+	if (<?php echo "$chair"; ?>) html += "<b>Chairs</b> | ";
+	else html += "Chairs | ";
+      }
+      if (drawer == "y") {
+	if (<?php echo "$drawer"; ?>) html += "<b>Drawers</b> | ";
+	else html += "Drawers | ";
+      }
+      if (desk == "y") {
+	if (<?php echo "$desk"; ?>) html += "<b>Desks</b> | ";
+	else html += "Desks | ";
+      }
+      if (plant == "y") {
+	if (<?php echo "$plant"; ?>) html += "<b>Plants</b> | ";
+	else html += "Plants | ";
+      }
+
+
       var marker = new google.maps.Marker({
         map: map,
         position: latlng

@@ -5,8 +5,8 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 //require("dbinfo.php");
 
-if(!isset($_POST['store'])) {
-  die("Sorry, please select a store first.");
+if(!isset($_POST['store']) || $_POST['store'] == 'none') {
+  die("<div align='center' width='80%'><font face='Arial' size='10'><br/><br/><br/><b>Please first search for available stores, and then select a store from the drop-down menu.</b><br/><br/><a href='locations.php'>Back</a></font></div>");
 }
 
 $store = $_POST["store"];
