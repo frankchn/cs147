@@ -336,27 +336,22 @@ function lightUp(int icon){
 	switch(icon){
 	case 0:
 		Document.getElementById("arrow").src="../images/left2.png";
-		alert("changed item");
 		setTimeout("Document.getElementById('arrow').src='../images/left.png'", 500);
 		break;
 	case 1:
 		Document.getElementById("arrow").src="../images/add2.png";
-		alert("changed item");
 		setTimeout("Document.getElementById('arrow').src='../images/add.png'", 500);
 		break;
 	case 2:
 		Document.getElementById("arrow").src="../images/arrow2.png";
-		alert("changed item");
 		setTimeout("Document.getElementById('arrow').src='../images/arrow.png'", 500);
 		break;
 	case 3:
 		Document.getElementById("arrow").src="../images/rotate2.png";
-		alert("changed item");
 		setTimeout("Document.getElementById('arrow').src='../images/rotate.png'", 500);
 		break;
 	case 4:
 		Document.getElementById("arrow").src="../images/checkout2.png";
-		alert("changed item");
 		setTimeout("Document.getElementById('arrow').src='../images/checkout.png'", 500);
 		break;
 	}
