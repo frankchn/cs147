@@ -16,6 +16,19 @@ return $xmlStr;
 $center_lat = $_GET["lat"];
 $center_lng = $_GET["lng"];
 $radius = $_GET["radius"];
+$items = array("bed"=>false, "chair"=>false, "drawer"=>false, "desk"=>false, "plant"=>false);
+$items["bed"] = $_GET["bed"];
+$items["chair"] = $_GET["chair"];
+$items["drawer"] = $_GET["drawer"];
+$items["desk"] = $_GET["desk"];
+$items["plant"] = $_GET["plant"];
+
+$required_items = array();
+foreach ($items as $item => $presence) {
+	if ($presence == true) {
+		$required_items[] = $item;
+	}
+}
 
 // Opens a connection to a MySQL server
 $connection=mysql_connect ('localhost', $username, $password);
@@ -30,11 +43,22 @@ if (!$db_selected) {
 }
 
 // Select all the rows in the markers table
-$query = sprintf("SELECT id, address, name, lat, lng, ( 3959 * acos( cos( radians('%s') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('%s') ) + sin( radians('%s') ) * sin( radians( lat ) ) ) ) AS distance FROM addresses HAVING distance < '%s' ORDER BY distance LIMIT 0 , 20",
+$query = sprintf("SELECT id, address, name, lat, lng, bed, chair, drawer, desk, plant, ( 3959 * acos( cos( radians('%s') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('%s') ) + sin( radians('%s') ) * sin( radians( lat ) ) ) ) AS distance FROM addresses",
   mysql_real_escape_string($center_lat),
   mysql_real_escape_string($center_lng),
-  mysql_real_escape_string($center_lat),
-  mysql_real_escape_string($radius));
+  mysql_real_escape_string($center_lat));
+
+if (!empty($required_items)) {
+	$query .= " WHERE ";
+	$i = 0;
+	foreach ($required_items as $item) {
+		if ($i != 0) $query .= " AND ";
+		$query .= "$item='y'";
+		$i++;
+	}
+}
+
+$query .= sprintf(" HAVING distance < '%s'", mysql_real_escape_string($radius));
 
 $result = mysql_query($query);
 if (!$result) {
@@ -51,7 +75,12 @@ while ($row = @mysql_fetch_assoc($result)){
   echo 'lat="' . $row['lat'] . '" ';
   echo 'lng="' . $row['lng'] . '" ';
   echo 'distance="' . $row['distance'] . '" ';
-  echo 'internalid="'. $row['id'] , '" ';
+  echo 'internalid="'. $row['id'] . '" ';
+  echo 'bed="'. $row['bed'] . '" ';
+  echo 'chair="'. $row['chair'] . '" ';
+  echo 'drawer="'. $row['drawer'] . '" ';
+  echo 'desk="'. $row['desk'] . '" ';
+  echo 'plant="'. $row['plant'] . '" ';
   echo "/>\n";
 }
 

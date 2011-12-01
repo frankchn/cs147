@@ -5,11 +5,12 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 //require("dbinfo.php");
 
-if(!isset($_POST['store'])) {
-  die("Sorry, please select a store first.");
+if(!isset($_POST['store']) || $_POST['store'] == 'none') {
+  die("<div align='center' width='80%'><font face='Arial' size='10'><br/><br/><br/><b>Please first search for available stores, and then select a store from the drop-down menu.</b><br/><br/><a href='locations.php'>Back</a></font></div>");
 }
 
 $store = $_POST["store"];
+$objects = object_to_array($session_info['config_info']['room_config']);
 
 $query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
 $result = mysql_query($query);
@@ -44,7 +45,15 @@ generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup
 ?>
 	<div data-role="content">
         <div data-role="fieldcontain">
-		Congratulations!  You have chosen to purchase your items at <br><br>
+		Congratulations!  You have chosen to purchase your items (<?php
+$i=0;
+foreach($objects as $k => $v) {
+	echo $v["name"];
+	if ($i != count($objects)-1) echo ", ";
+	$i++;
+}
+?>
+) at <br><br>
 		<b><?php echo $store_choice; ?></b><br><br>
 		which is located at <br><br>
 		<b><?php echo $address; ?></b><br><br>
