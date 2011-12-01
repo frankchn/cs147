@@ -23,7 +23,6 @@ if(!isset($session_info['config_info']['room_config']) ||
     $objects[$i]['position'] = unserialize($obj['position']);
     $objects[$i]['size'] = unserialize($obj['size']);
     $objects[$i]['price'] = ($obj['price']);
-    cd 
     $i++;
   }
 
