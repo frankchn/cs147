@@ -39,7 +39,7 @@ navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
 	<div data-role="content">
     	<img src="images/logo_large.png" />
         <hr />
-        <center>Your one-stop shop for the perfect dorm room!</center>
+        <center>Welcome to DormDecor, your one-stop shop for planning, furnishing, and decorating your college dorm room!</center>
     </div> 
 </div> 
 </body>

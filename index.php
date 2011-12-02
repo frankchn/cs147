@@ -26,7 +26,7 @@ require($ROOT_PREFIX.'inc/function.inc.php');
     	<img src="images/logo_large.png" />
         <hr />
         <div>
-	  Welcome to DormDecor! Your handy guide to decorating, planning and finding items for your Stanford dorm room.
+	  Welcome to DormDecor, your one-stop shop for planning, furnishing, and decorating your college dorm room!
 	</div>
 	<hr />
 	<div>
