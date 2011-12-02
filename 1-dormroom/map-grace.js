@@ -57,7 +57,7 @@
 	});
 
 	var nearestDormWindow = new google.maps.InfoWindow({
-		content: 'Found the dorm nearest to you!\n<a href="../3-editor/index.php">Decorate a room in ' + dorm_coords[closestIndex].name + '?</a>'
+		content: 'Found the dorm nearest to you!\n<a data-ajax="false" href="../3-editor/index.php">Decorate a room in ' + dorm_coords[closestIndex].name + '?</a>'
 	});
 	infowindow.close();
 	nearestDormWindow.open(map, nearestDormMarker);
