@@ -66,19 +66,22 @@ foreach($objects as $k => $v) {
    }
 
    function searchLocations() {
-     var address = document.getElementById("addressInput").value;
-     var geocoder = new google.maps.Geocoder();
-     geocoder.geocode({address: address}, function(results, status) {
-       if (status == google.maps.GeocoderStatus.OK) {
-        searchLocationsNear(results[0].geometry.location);
+
 	$('#firstpart').fadeOut('slow', function() {
 	  $('#secondpart').fadeIn('slow');
+	  load();
+	  var address = document.getElementById("addressInput").value;
+	  var geocoder = new google.maps.Geocoder();
+	  geocoder.geocode({address: address}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	      searchLocationsNear(results[0].geometry.location);
+	    } else {
+	      alert(address + ' not found');
+	    }
+	  });
 	});
 
-       } else {
-         alert(address + ' not found');
-       }
-     });
+
    }
 
    function clearLocations() {
@@ -125,7 +128,7 @@ foreach($objects as $k => $v) {
 	 var plant = markerNodes[i].getAttribute("plant");
          createOption(name, distance, parseInt(markerNodes[i].getAttribute("internalid")));
          //createMarker(latlng, name, address);
-         createMarker(latlng, name, address, bed, chair, drawer, desk, plant);
+         createMarker(parseInt(markerNodes[i].getAttribute("internalid")), latlng, name, address, bed, chair, drawer, desk, plant);
          bounds.extend(latlng);
        }
        map.fitBounds(bounds);
@@ -137,8 +140,8 @@ foreach($objects as $k => $v) {
       });
     }
 
-    function createMarker(latlng, name, address, bed, chair, drawer, desk, plant) {
-      var html = "<b>" + name + "</b> <br/>" + address;
+    function createMarker(iid, latlng, name, address, bed, chair, drawer, desk, plant) {
+      var html = "<b><a href='choice.php?getoption=" + iid + "'>" + name + "</a></b> <br/>" + address;
       html += "<br/><br/><u>Items</u> <font size='-1'>(<b>bold</b> = item you are purchasing)<br/></font>";
       if (bed == "y") {
 	if (<?php echo "$bed"; ?>) html += "<b>Beds</b> | ";
@@ -233,11 +236,11 @@ generate_header('Store Locations', '<a href="choose.php" data-icon="back">Back</
     </div>
     </div>
     <div id="secondpart" style="display:none">
+      <div id="map" style="width: 290px; height: 250px"></div>
       <form id="location" method="post" action="choice.php" data-ajax="false"> 
-	  <div style="float:left"><select id="locationSelect" value="Select your store choice" name="store" style="width:50%"></select></div>
-	  <div style="float:right"><input type="submit" style="width:50%" value="Choose"/></div>
+	  <div><select id="locationSelect" value="Select your store choice" name="store"></select></div>
+	  <div><input type="submit" style="width:50%" value="Choose"/></div>
       </form>
-      <div id="map" style="width: 290px; height: 300px"></div>
     </div>
     </div>
 

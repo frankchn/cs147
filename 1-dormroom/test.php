@@ -16,7 +16,7 @@
 </style>
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-<script type="text/javascript" src="map.js"></script>
+<script type="text/javascript" src="map-grace.js"></script>
 </head>
 <body onload="initialize()">
 <div data-role="page" data-theme="e">  
@@ -24,6 +24,7 @@
   <div data-role="content">
   <div id="map_canvas" style="width:290px; height:300px"></div>
 	<input type="button" value="Find My Dorm!" onclick="reverseGeocode()">
+  <div style="text-align:center"><a href='pick.php'>Pick Location Manually</a></div>
   </div>
 </div>
 </body>

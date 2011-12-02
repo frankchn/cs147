@@ -57,7 +57,7 @@
 	});
 
 	var nearestDormWindow = new google.maps.InfoWindow({
-		content: 'Found the dorm nearest to you!\nDecorate a room in ' + dorm_coords[closestIndex].name + "?"
+		content: 'Found the dorm nearest to you!\n<a href="../3-editor/index.php">Decorate a room in ' + dorm_coords[closestIndex].name + '?</a>'
 	});
 	infowindow.close();
 	nearestDormWindow.open(map, nearestDormMarker);
@@ -66,6 +66,7 @@
 	/*var latlngstr = input.split(",", 2);
 	var lat = parseFloat(latlngstr[0]);
 	var lng = parseFloat(latlngstr[1]);*/
+
 	geocoder.geocode({'latLng': latlng}, function(results, status){
 	if(status == google.maps.GeocoderStatus.OK) {
 		if(results[0]){
@@ -78,40 +79,39 @@
 	});
 }
 
+function showMap(position){
+	latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	//alert(position.coords.latitude + " " + position.coords.longitude);
+	var myOptions = {
+		zoom: 17,
+		center: latlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	marker = new google.maps.Marker({
+		position: latlng,
+		map: map,
+		title: "You are here!"
+	});
+
+	infowindow = new google.maps.InfoWindow({
+		content: 'You are here!'
+	});
+	infowindow.open(map, marker);
+
+}
+
+function showError(error) {
+	window.location = 'pick.php';
+}
+
   function initialize() {
 	geocoder = new google.maps.Geocoder();
-	
+		
 	if(navigator.geolocation){
-		function showMap(position){
-			latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			//alert(position.coords.latitude + " " + position.coords.longitude);
-			var myOptions = {
-				zoom: 17,
-				center: latlng,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			}
-			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-			marker = new google.maps.Marker({
-				position: latlng,
-				map: map,
-				title: "You are here!"
-			});
-
-			infowindow = new google.maps.InfoWindow({
-				content: 'You are here!'
-			});
-			infowindow.open(map, marker);
-
-		      /*google.maps.event.addListener(marker, 'click', function() {
-			infoWindow.setContent("You are here!");
-			infoWindow.open(map, marker);
-		      });
-			*/
-
-
-		}
-		navigator.geolocation.getCurrentPosition(showMap);
-		//reverseGeocode();
+	  //navigator.geolocation.getCurrentPosition(showMap);
+	  navigator.geolocation.getCurrentPosition(showMap, showError, {enableHighAccuracy:true,maximumAge:60000});
+	  
 	}
   }
   

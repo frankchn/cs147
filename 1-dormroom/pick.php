@@ -35,6 +35,7 @@ generate_header('Dorm Location', '',
 		'<a class="ui-btn-right" href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="arrow-r">Next</a>'); 
 ?>
     <div data-role="content">
+      <p>Sorry, we couldn't detect your location automatically.</p>
       <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
       <div data-role="fieldcontain">
 	  <label for="dorm">Dorm Name</label>

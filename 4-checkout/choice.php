@@ -5,11 +5,14 @@ require($ROOT_PREFIX.'inc/config.inc.php');
 require($ROOT_PREFIX.'inc/function.inc.php');
 //require("dbinfo.php");
 
-if(!isset($_POST['store']) || $_POST['store'] == 'none') {
-  die("<div align='center' width='80%'><font face='Arial' size='10'><br/><br/><br/><b>Please first search for available stores, and then select a store from the drop-down menu.</b><br/><br/><a href='locations.php'>Back</a></font></div>");
+if(isset($_POST['store'])) {
+  $store = $_POST["store"];
 }
 
-$store = $_POST["store"];
+if(isset($_GET['getoption'])) {
+  $store = $_GET['getoption'];
+}
+
 $objects = object_to_array($session_info['config_info']['room_config']);
 
 $query = sprintf("SELECT name, address FROM addresses WHERE id = $store;");
@@ -41,7 +44,7 @@ $address = $row['address'];
 <body>
 <div data-role="page" data-theme="e">  
 <?php 
-generate_header('Buy From Store', '<a data-ajax="false" data-transition="slideup" href="javascript:history.go(-1)" data-icon="arrow-l">Cancel</a>'); 
+generate_header('Buy From Store', '<a data-ajax="false" href="locations.php" data-icon="arrow-l">Cancel</a>'); 
 ?>
 	<div data-role="content">
         <div data-role="fieldcontain">
@@ -57,7 +60,7 @@ foreach($objects as $k => $v) {
 		<b><?php echo $store_choice; ?></b><br><br>
 		which is located at <br><br>
 		<b><?php echo $address; ?></b><br><br>
-	<a href="directions.php?store_id=<?php echo $store; ?>" data-ajax="false">See directions!</a></br>
+	<div style="text-align:center"><a href="directions.php?store_id=<?php echo $store; ?>" data-ajax="false">See directions!</a></div>
 
         </div>
 </div>

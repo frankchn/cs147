@@ -335,8 +335,8 @@ function undoConfiguration() {
 function lightUp(icon){
 	switch(icon){
 		case 0:
-			document.getElementById("arrow").src="../images/left2.png";
-			setTimeout("document.getElementById('arrow').src='../images/left.png'", 500);
+			document.getElementById("arrow").src="../images/arrow2.png";
+			setTimeout("document.getElementById('arrow').src='../images/arrow.png'", 500);
 			break;
 		case 1:
 			document.getElementById("add").src="../images/add2.png";
@@ -378,7 +378,7 @@ $(document).ready(function () {
 
 <div data-role="header" class="ui-bar"  data-theme="e">
   <div class="ui-grid-d">
-    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l">
+    <a class="ui-block-a" data-transition="slideup" data-ajax="false" href="../1-dormroom/test.php" data-icon="arrow-l">
       <img id="arrow" border="0" src="../images/arrow.png" ontouchstart="lightUp(0)" />
     </a>
     <a class="ui-block-b" href="add.php">
