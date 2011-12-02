@@ -1,6 +1,3 @@
-#!/usr/bin/php
-
-
 <!DOCTYPE html>
 <html>
 <head>
