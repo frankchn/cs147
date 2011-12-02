@@ -71,6 +71,10 @@ foreach($objects as $k => $v) {
      geocoder.geocode({address: address}, function(results, status) {
        if (status == google.maps.GeocoderStatus.OK) {
         searchLocationsNear(results[0].geometry.location);
+	$('#firstpart').fadeOut('slow', function() {
+	  $('#secondpart').fadeIn('slow');
+	});
+
        } else {
          alert(address + ' not found');
        }
@@ -215,21 +219,28 @@ foreach($objects as $k => $v) {
 generate_header('Store Locations', '<a href="choose.php" data-icon="back">Back</a>');
 ?>
     <div data-role="content">
-    <div>
+    <div id="firstpart">
      <input type="text" value="94305" id="addressInput" size="10"/>
-    <select id="radiusSelect">
-      <option value="25" selected>25mi</option>
-      <option value="100">100mi</option>
-      <option value="200">200mi</option>
-    </select>
-
-    <input type="button" onclick="searchLocations()" value="Search"/>
+    <div style="float:left">
+      <select id="radiusSelect" style="width:100%">
+	<option value="25" selected>25mi</option>
+	<option value="100">100mi</option>
+	<option value="200">200mi</option>
+      </select>
     </div>
-	<form id="location" method="post" action="choice.php" data-ajax="false"> 
-	    <div><select id="locationSelect" value="Select your store choice" name="store" style="width:100%;visibility:hidden"></select></div>
-	    <input type="submit" value="Choose this store!"/>
-	</form>
-    <div id="map" style="width: 290px; height: 300px"></div>
+    <div style="float:right">
+      <input type="button" style="width:100%" onclick="searchLocations()" value="Search"/>
+    </div>
+    </div>
+    <div id="secondpart" style="display:none">
+      <form id="location" method="post" action="choice.php" data-ajax="false"> 
+	  <div style="float:left"><select id="locationSelect" value="Select your store choice" name="store" style="width:50%;visibility:hidden"></select></div>
+	  <div style="float:right"><input type="submit" style="width:50%" value="Choose"/></div>
+      </form>
+      <div id="map" style="width: 290px; height: 300px"></div>
+    </div>
+    </div>
 
-    </div> 
-</div> 
+</div>
+</body>
+</html>
