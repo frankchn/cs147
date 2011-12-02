@@ -332,28 +332,28 @@ function undoConfiguration() {
   }
 }
 
-function lightUp(int icon){
+function lightUp(icon){
 	switch(icon){
-	case 0:
-		Document.getElementById("arrow").src="../images/left2.png";
-		setTimeout("Document.getElementById('arrow').src='../images/left.png'", 500);
-		break;
-	case 1:
-		Document.getElementById("arrow").src="../images/add2.png";
-		setTimeout("Document.getElementById('arrow').src='../images/add.png'", 500);
-		break;
-	case 2:
-		Document.getElementById("arrow").src="../images/arrow2.png";
-		setTimeout("Document.getElementById('arrow').src='../images/arrow.png'", 500);
-		break;
-	case 3:
-		Document.getElementById("arrow").src="../images/rotate2.png";
-		setTimeout("Document.getElementById('arrow').src='../images/rotate.png'", 500);
-		break;
-	case 4:
-		Document.getElementById("arrow").src="../images/checkout2.png";
-		setTimeout("Document.getElementById('arrow').src='../images/checkout.png'", 500);
-		break;
+		case 0:
+			document.getElementById("arrow").src="../images/left2.png";
+			setTimeout("document.getElementById('arrow').src='../images/left.png'", 500);
+			break;
+		case 1:
+			document.getElementById("add").src="../images/add2.png";
+			setTimeout("document.getElementById('add').src='../images/add.png'", 500);
+			break;
+		case 2:
+			document.getElementById("trash").src="../images/trash2.png";
+			setTimeout("document.getElementById('trash').src='../images/trash.png'", 500);
+			break;
+		case 3:
+			document.getElementById("rotate").src="../images/rotate2.png";
+			setTimeout("document.getElementById('rotate').src='../images/rotate.png'", 500);
+			break;
+		case 4:
+			document.getElementById("checkout").src="../images/checkout2.png";
+			setTimeout("document.getElementById('checkout').src='../images/checkout.png'", 500);
+			break;
 	}
 }
 
@@ -378,13 +378,21 @@ $(document).ready(function () {
 
 <div data-role="header" class="ui-bar"  data-theme="e">
   <div class="ui-grid-d">
-    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l"><img id="arrow" border="0" src="../images/arrow.png" onclick="lightUp(0)" /></a>
-    <a class="ui-block-b" href="add.php"><img id="add" border="0" src="../images/add.png" onclick="lightUp(1)" /></a>
-    
-    <a class="ui-block-c" href="javascript:deleteSelectedObject()"><img id="trash" src="../images/trash.png" onclick="lightUp(2)" /></a>
-    <a class="ui-block-d" href="javascript:rotateObject()"><img id="rotate" border="0" src="../images/rotate.png" onclick="lightUp(3)" /></a>
-    
-    <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();"><img id="checkout" border="0" src="../images/checkout.png" onclick="lightUp(4)" /></a>
+    <a class="ui-block-a" data-transition="slideup" href="../1-dormroom/pick.php" data-icon="arrow-l">
+      <img id="arrow" border="0" src="../images/arrow.png" ontouchstart="lightUp(0)" />
+    </a>
+    <a class="ui-block-b" href="add.php">
+      <img id="add" border="0" src="../images/add.png" ontouchstart="lightUp(1)" />
+    </a>
+    <a class="ui-block-c" href="javascript:deleteSelectedObject()">
+      <img id="trash" src="../images/trash.png" ontouchstart="lightUp(2)" />
+    </a>
+    <a class="ui-block-d" href="javascript:rotateObject()">
+      <img id="rotate" border="0" src="../images/rotate.png" ontouchstart="lightUp(3)" />
+    </a>
+    <a class="ui-block-e" href="javascript:saveConfigurationAndCheckOut();">
+      <img id="checkout" border="0" src="../images/checkout.png" ontouchstart="lightUp(4)" />
+    </a>
   </div>
 </div>
 

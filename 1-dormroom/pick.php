@@ -32,7 +32,7 @@ if(isset($_GET['store']) && $_GET['store'] == 1) {
 <div data-role="page" id="pick-page" data-theme="e">  
 <?php 
 generate_header('Dorm Location', '',
-		'<a href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="arrow-r">Next</a>'); 
+		'<a class="ui-btn-right" href="#" onClick="document.getElementById(\'manualform\').submit()" data-icon="arrow-r">Next</a>'); 
 ?>
     <div data-role="content">
       <form method="post" id="manualform" action="pick.php?store=1" data-ajax="false">
