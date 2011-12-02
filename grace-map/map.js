@@ -59,6 +59,7 @@
 	var nearestDormWindow = new google.maps.InfoWindow({
 		content: 'Found the dorm nearest to you!\nDecorate a room in ' + dorm_coords[closestIndex].name + "?"
 	});
+	infowindow.close();
 	nearestDormWindow.open(map, nearestDormMarker);
 }
   function reverseGeocode(){
@@ -101,10 +102,11 @@
 			});
 			infowindow.open(map, marker);
 
-		      google.maps.event.addListener(marker, 'click', function() {
+		      /*google.maps.event.addListener(marker, 'click', function() {
 			infoWindow.setContent("You are here!");
 			infoWindow.open(map, marker);
 		      });
+			*/
 
 
 		}
