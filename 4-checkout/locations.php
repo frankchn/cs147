@@ -142,7 +142,7 @@ foreach($objects as $k => $v) {
 
     function createMarker(iid, latlng, name, address, bed, chair, drawer, desk, plant) {
       var html = "<b><a href='choice.php?getoption=" + iid + "'>" + name + "</a></b> <br/>" + address;
-      html += "<br/><br/><u>Items Available</u> <font size='-1'>(<b>bold</b> = item on your shopping list)<br/></font>";
+      html += "<br/><br/><u>Items Available</u><br><font size='-1'>(<b>bold</b> = item on your shopping list)<br/></font>";
       if (bed == "y") {
 	if (<?php echo "$bed"; ?>) html += "<b>Beds</b> | ";
 	else html += "Beds | ";
