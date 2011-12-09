@@ -39,6 +39,7 @@ if(!isset($session_info['config_info']['room_config']) ||
 } else {
   $objects = object_to_array($session_info['config_info']['room_config']);
   //$display_first = true;
+
 } 
 
 for($i = 0; $i < count($objects); $i++) {

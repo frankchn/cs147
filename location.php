@@ -28,7 +28,9 @@ function errorHandler(error) {
 	window.location = 'home.php';
 }
 
-navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
+window.location = 'home.php';
+
+//navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
 
 </script>
 
